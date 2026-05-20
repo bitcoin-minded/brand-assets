@@ -1,0 +1,351 @@
+/* =============================================================================
+   Bitcoin-Minded — Brand Tokens
+   =============================================================================
+   CSS custom properties for the Bitcoin-Minded design system.
+
+   Source of truth: STD_Brand-Kit.md (colors, typefaces, identity direction)
+                    STD_Design-System.md (numeric values, breakpoints, components)
+
+   Every value in this file appears in one of those two documents. Do not edit
+   values here without updating the source documents. The three files must stay
+   in lockstep.
+
+   Usage: include this file once in the page <head>, before any other CSS.
+   All other component styles consume these tokens via var(--token-name).
+
+   Version: 1.0 — 2026-05-11
+   ============================================================================= */
+
+:root {
+
+  /* ===========================================================================
+     1. COLORS — MASTER PALETTE
+     ---------------------------------------------------------------------------
+     From STD_Brand-Kit Master Palette. These apply to every surface.
+     Pure black (#000000) and pure white (#FFFFFF) are excluded from the brand
+     and must never be used. Use --color-ink and --color-paper instead.
+     =========================================================================== */
+
+  --color-paper:        #F4EFE6;   /* Default background. Warm off-white. 70-80% of any surface. */
+  --color-paper-warm:   #EBE3D4;   /* Card backgrounds, closing CTA panels, pricing panels. */
+  --color-ink:          #1A1714;   /* Body type, headings. Warm near-black. Never #000. */
+  --color-ink-mute:     #5A4F45;   /* Secondary text — captions, meta, footer, ink-mute eyebrows. */
+  --color-rule:         #D8CDB8;   /* Hairlines, subtle dividers, table borders. */
+  --color-rule-strong:  #BFB39A;   /* Stronger dividers, disabled-button background. */
+  --color-accent:       #B85C2A;   /* Master accent — desaturated terracotta. Italic emphasis on
+                                      shared surfaces, hero CTA hover, quiet-two-tone emblem. */
+
+
+  /* ===========================================================================
+     2. COLORS — PER-COURSE IMPRINTS
+     ---------------------------------------------------------------------------
+     From STD_Brand-Kit Imprint Colors. Each course has one dedicated color.
+     Imprint colors appear only in trace positions (eyebrows, italic emphasis,
+     section numbers, left-edge stripes, hairlines, closing-CTA top band).
+     Imprint colors NEVER tint backgrounds, button fills, or body type.
+     =========================================================================== */
+
+  --color-imprint-bfp:  #8C6A2F;   /* Honey ochre — Bitcoin for People. Lightest, applied with lighter touch. */
+  --color-imprint-bfb:  #2D4A47;   /* Slate teal — Bitcoin for Business. Applied at full intensity. */
+  --color-imprint-bfa:  #1F2748;   /* Ink navy — Bitcoin for Advisors. Applied at full intensity. */
+
+
+  /* ===========================================================================
+     3. EXCLUDED COLORS — DO NOT USE
+     ---------------------------------------------------------------------------
+     Listed here as commented reference only. These hex values are excluded from
+     the brand per STD_Brand-Kit. Never define a custom property that resolves
+     to any of these.
+     ---------------------------------------------------------------------------
+     #F7931A — Bitcoin orange (category signal)
+     #000000 — Pure black (use --color-ink)
+     #FFFFFF — Pure white (use --color-paper)
+     #0F766E — Tailwind/SaaS teal (category signal)
+     #003366 — Corporate finance navy (category signal)
+     =========================================================================== */
+
+
+  /* ===========================================================================
+     4. TYPOGRAPHY — FONT FAMILIES
+     ---------------------------------------------------------------------------
+     Per STD_Brand-Kit: Fraunces (display), DM Sans (body), JetBrains Mono (trace).
+     Substitutions explicitly prohibited (no Inter for DM Sans, no Tiempos/
+     Merriweather for Fraunces).
+
+     Fallback chains exist for email and other non-web contexts where custom
+     fonts may not load. Use --font-display, --font-body, --font-mono on the
+     web; the fallback variants for email templates.
+     =========================================================================== */
+
+  --font-display:       'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:          'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:          'JetBrains Mono', 'Courier New', Courier, monospace;
+
+
+  /* ===========================================================================
+     5. TYPOGRAPHY — DESKTOP TYPE SCALE
+     ---------------------------------------------------------------------------
+     Each token bundles a size and line-height. Weight, family, and letter-
+     spacing are applied per-element at the component level (see
+     STD_Design-System.md section 1.1 for the full per-token spec).
+
+     All values are within STD_Brand-Kit type ranges except --type-body-lg
+     (19px) and --type-h4 (20px), which are inferred per STD_Design-System.md
+     section 4 flagged decisions.
+     =========================================================================== */
+
+  --type-display:               56px;   /* Hero H1.    Fraunces 500, lh 1.08 */
+  --type-display-lh:            1.08;
+  --type-h1:                    44px;   /* Inner H1.   Fraunces 500, lh 1.12 */
+  --type-h1-lh:                 1.12;
+  --type-h2:                    36px;   /* Section H2. Fraunces 400, lh 1.15 */
+  --type-h2-lh:                 1.15;
+  --type-h3:                    24px;   /* Sub-section H3. Fraunces 500, lh 1.25 */
+  --type-h3-lh:                 1.25;
+  --type-h4:                    20px;   /* Block headers (curriculum, FAQ, pricing). Fraunces 500, lh 1.30 */
+  --type-h4-lh:                 1.30;
+  --type-body-lg:               19px;   /* Hero subhead, lead paragraphs. DM Sans 400, lh 1.55 */
+  --type-body-lg-lh:            1.55;
+  --type-body:                  17px;   /* Default running text. DM Sans 400, lh 1.60 */
+  --type-body-lh:               1.60;
+  --type-body-sm:               15px;   /* Captions, micro-copy. DM Sans 400, lh 1.55 */
+  --type-body-sm-lh:            1.55;
+  --type-eyebrow:               13px;   /* Uppercase eyebrows. DM Sans 500, lh 1.30, ls 0.14em */
+  --type-eyebrow-lh:            1.30;
+  --type-eyebrow-ls:            0.14em;
+  --type-trace:                 12px;   /* JetBrains Mono trace meta. JetBrains Mono 400, lh 1.40 */
+  --type-trace-lh:              1.40;
+  --type-button:                16px;   /* Button label. DM Sans 500, lh 1.20 */
+  --type-button-lh:             1.20;
+  --type-nav:                   15px;   /* Nav link. DM Sans 500, lh 1.20 */
+  --type-nav-lh:                1.20;
+
+
+  /* ===========================================================================
+     6. TYPOGRAPHY — MOBILE TYPE SCALE
+     ---------------------------------------------------------------------------
+     Below 768px (--bp-md), the display range shrinks. Body sizes do not change.
+     These tokens are applied via the media query at the bottom of this file.
+     =========================================================================== */
+
+  /* Mobile values are applied in the @media (max-width: 767px) block below.
+     The desktop tokens above are the defaults. */
+
+
+  /* ===========================================================================
+     7. SPACING SCALE
+     ---------------------------------------------------------------------------
+     Base unit 4px. Reasoning in STD_Design-System.md section 1.2.
+     Mobile overrides for --space-9 through --space-12 in the media query below.
+     =========================================================================== */
+
+  --space-1:    4px;    /* Hairline gaps. */
+  --space-2:    8px;    /* Tight within-component gaps. */
+  --space-3:    12px;   /* Button vertical padding, list item gap. */
+  --space-4:    16px;   /* Default inter-paragraph margin. */
+  --space-5:    24px;   /* Headline to subhead, button horizontal padding. */
+  --space-6:    32px;   /* Sub-section gap. */
+  --space-7:    48px;   /* Between major blocks within a section. */
+  --space-8:    64px;   /* H2 to body block gap. */
+  --space-9:    96px;   /* Default section vertical padding (desktop). */
+  --space-10:   128px;  /* Hero section vertical padding (desktop). */
+  --space-11:   160px;  /* Wide vertical separator between page regions (desktop). */
+  --space-12:   192px;  /* Reserved — full-bleed editorial chapters. */
+
+
+  /* ===========================================================================
+     8. LAYOUT — CONTAINERS AND BREAKPOINTS
+     ---------------------------------------------------------------------------
+     Single-column editorial pattern. Multi-column reserved for genuine list
+     content (curriculum, FAQ stack, pricing two-up).
+     =========================================================================== */
+
+  --container-narrow:       680px;   /* Body prose, FAQ, email capture. */
+  --container-default:      960px;   /* Default landing page width. */
+  --container-wide:         1200px;  /* Two-up media+text, comparison tables. */
+  --container-full:         100%;    /* CTA bands, footer. */
+
+  /* Breakpoint values — for reference. Use in CSS via @media queries directly. */
+  --bp-md:                  768px;
+  --bp-lg:                  1024px;
+
+  /* Gutter (page margin outside container) */
+  --gutter-sm:              24px;
+  --gutter-md:              48px;
+  --gutter-lg:              64px;
+
+
+  /* ===========================================================================
+     9. BORDER RADIUS
+     ---------------------------------------------------------------------------
+     Editorial register prohibits SaaS-style pill shapes. Range 0-8px.
+     =========================================================================== */
+
+  --radius-0:   0px;    /* Hairlines, full-bleed bands, default for most elements. */
+  --radius-1:   2px;    /* Buttons, form inputs, pricing panels. */
+  --radius-2:   4px;    /* Cards with content density. */
+  --radius-3:   8px;    /* Reserved — currently unused. */
+
+
+  /* ===========================================================================
+     10. FOCUS RINGS
+     ---------------------------------------------------------------------------
+     Accessibility requirement. 2px ring at 2px offset. Color varies by background.
+     Applied via :focus-visible, not :focus (mouse users do not see rings).
+     =========================================================================== */
+
+  --focus-ring-width:       2px;
+  --focus-ring-offset:      2px;
+  --focus-ring-color:       var(--color-ink);          /* Default — on paper backgrounds. */
+  --focus-ring-color-dark:  var(--color-paper);        /* On dark/imprint/accent backgrounds. */
+  --focus-ring-color-ink:   var(--color-accent);       /* On --color-ink button backgrounds. */
+
+
+  /* ===========================================================================
+     11. TRANSITIONS
+     ---------------------------------------------------------------------------
+     Interactive elements only. Duration kept short — the editorial register
+     does not use long animated reveals.
+     =========================================================================== */
+
+  --transition-fast:        150ms ease-out;   /* Button hover, link color change. */
+  --transition-medium:      200ms ease-out;   /* Accordion expand/collapse. */
+
+
+  /* ===========================================================================
+     12. COMPONENT TOKENS — NAV
+     =========================================================================== */
+
+  --nav-height:                 72px;
+  --nav-height-mobile:          64px;
+  --nav-logo-height:            28px;
+  --nav-logo-height-mobile:     24px;
+  --nav-background:             var(--color-paper);
+  --nav-border-bottom:          1px solid var(--color-rule);
+  --nav-link-color:             var(--color-ink);
+  --nav-link-color-hover:       var(--color-accent);
+
+
+  /* ===========================================================================
+     13. COMPONENT TOKENS — BUTTON
+     ---------------------------------------------------------------------------
+     Primary, secondary, and text-link variants. Per STD_Brand-Kit: imprint
+     colors NEVER tint button fills, so primary buttons remain --color-ink
+     on every surface including per-course pages.
+     =========================================================================== */
+
+  /* Primary */
+  --btn-primary-bg:             var(--color-ink);
+  --btn-primary-color:          var(--color-paper);
+  --btn-primary-bg-hover:       var(--color-accent);
+  --btn-primary-bg-disabled:    var(--color-rule-strong);
+  --btn-primary-color-disabled: var(--color-ink-mute);
+
+  /* Secondary */
+  --btn-secondary-bg:           transparent;
+  --btn-secondary-color:        var(--color-ink);
+  --btn-secondary-border:       1px solid var(--color-ink);
+  --btn-secondary-bg-hover:     var(--color-ink);
+  --btn-secondary-color-hover:  var(--color-paper);
+
+  /* Shared button geometry */
+  --btn-padding-y:              var(--space-4);     /* 16px */
+  --btn-padding-x:              var(--space-6);     /* 32px */
+  --btn-radius:                 var(--radius-1);    /* 2px */
+  --btn-transition:             var(--transition-fast);
+
+
+  /* ===========================================================================
+     14. COMPONENT TOKENS — PRICING PANEL
+     =========================================================================== */
+
+  --pricing-bg:                 var(--color-paper-warm);
+  --pricing-radius:             var(--radius-2);    /* 4px */
+  --pricing-padding-desktop:    var(--space-8);     /* 64px */
+  --pricing-padding-mobile:     var(--space-6);     /* 32px */
+
+
+  /* ===========================================================================
+     15. COMPONENT TOKENS — CLOSING CTA BAND
+     =========================================================================== */
+
+  --cta-band-bg:                var(--color-paper-warm);
+  --cta-band-top-band-height:   3px;
+  --cta-band-padding-y:         var(--space-10);    /* 128px desktop */
+  --cta-band-padding-y-mobile:  80px;
+
+
+  /* ===========================================================================
+     16. COMPONENT TOKENS — CURRICULUM ROW
+     =========================================================================== */
+
+  --curriculum-stripe-width:    2px;
+  --curriculum-row-gap:         var(--space-7);     /* 48px between rows */
+  --curriculum-number-col:      var(--space-11);    /* 160px section number column */
+
+
+  /* ===========================================================================
+     17. COMPONENT TOKENS — FORM INPUT (Email Capture)
+     =========================================================================== */
+
+  --input-bg:                   var(--color-paper);
+  --input-border:               1px solid var(--color-rule-strong);
+  --input-border-focus:         1px solid var(--color-ink);
+  --input-border-error:         1px solid var(--color-accent);
+  --input-radius:               var(--radius-1);    /* 2px */
+  --input-padding-y:            var(--space-3);     /* 12px */
+  --input-padding-x:            var(--space-4);     /* 16px */
+  --input-placeholder-color:    var(--color-ink-mute);
+
+
+  /* ===========================================================================
+     18. COMPONENT TOKENS — LIST BLOCK
+     =========================================================================== */
+
+  --list-bullet:                '\00B7';            /* Middle dot character. */
+  --list-bullet-color:          var(--color-ink-mute);
+  --list-item-gap:              var(--space-3);     /* 12px between items */
+  --list-bullet-offset:         -24px;              /* Hanging indent */
+
+}
+
+
+/* =============================================================================
+   MOBILE OVERRIDES — applied at viewport widths under 768px
+   -----------------------------------------------------------------------------
+   Type scale shrinks at top. Body and below unchanged. Spacing scale shrinks
+   above --space-8.
+   ============================================================================= */
+
+@media (max-width: 767px) {
+  :root {
+    /* Type — mobile sizes */
+    --type-display:           40px;
+    --type-display-lh:        1.10;
+    --type-h1:                32px;
+    --type-h1-lh:             1.15;
+    --type-h2:                28px;
+    --type-h2-lh:             1.20;
+    --type-h3:                22px;
+    --type-h3-lh:             1.30;
+    --type-h4:                18px;
+    --type-h4-lh:             1.35;
+    --type-body-lg:           18px;
+
+    /* Spacing — mobile overrides for upper scale */
+    --space-9:                64px;    /* Section padding mobile */
+    --space-10:               80px;    /* Hero padding mobile */
+    --space-11:               96px;
+    --space-12:               128px;
+
+    /* Nav */
+    --nav-height:             64px;
+    --nav-logo-height:        24px;
+
+    /* CTA band */
+    --cta-band-padding-y:     80px;
+
+    /* Pricing */
+    --pricing-padding-desktop: var(--space-6);   /* Effectively forces 32px on mobile */
+  }
+}
