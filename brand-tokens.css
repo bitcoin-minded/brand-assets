@@ -91,7 +91,8 @@
 
      All values are within STD_Brand-Kit type ranges except --type-body-lg
      (19px) and --type-h4 (20px), which are inferred per STD_Design-System.md
-     section 4 flagged decisions.
+     section 4 flagged decisions. --type-body-xs (16px) added to fill the gap
+     between --type-body-sm and --type-body for panel aside copy.
      =========================================================================== */
 
   --type-display:               56px;   /* Hero H1.    Fraunces 500, lh 1.08 */
@@ -110,6 +111,8 @@
   --type-body-lh:               1.60;
   --type-body-sm:               15px;   /* Captions, micro-copy. DM Sans 400, lh 1.55 */
   --type-body-sm-lh:            1.55;
+  --type-body-xs:               16px;   /* Mid-size body — personal notes, panel asides. DM Sans 400, lh 1.55 */
+  --type-body-xs-lh:            1.55;
   --type-eyebrow:               13px;   /* Uppercase eyebrows. DM Sans 500, lh 1.30, ls 0.14em */
   --type-eyebrow-lh:            1.30;
   --type-eyebrow-ls:            0.14em;
