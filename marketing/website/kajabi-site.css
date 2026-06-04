@@ -3006,3 +3006,25 @@ footer.footer,
   max-width: 52ch;
   margin-bottom: var(--space-7);
 }
+
+/* About page — allow section backgrounds to bleed full width */
+.row:has(.about-returnbar),
+.row:has(.about-intro),
+.row:has(.about-mission),
+.row:has(.media-text--top),
+.row:has(.about-operate),
+.row:has(.about-cta) {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.col-12:has(.about-returnbar),
+.col-12:has(.about-intro),
+.col-12:has(.about-mission),
+.col-12:has(.media-text--top),
+.col-12:has(.about-operate),
+.col-12:has(.about-cta) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: 100% !important;
+}
