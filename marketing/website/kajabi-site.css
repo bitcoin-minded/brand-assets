@@ -1119,7 +1119,7 @@ footer.footer,
 
 /* ── Form block — strip Kajabi padding, pull up to close gap, align left ── */
 .block-type--form.text-left {
-  padding: 0 0 var(--space-7) 0 !important;
+  padding: 0 0 var(--space-10) 0 !important;
   margin-top: calc(-1 * var(--space-10)) !important;
 }
 
