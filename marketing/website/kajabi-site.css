@@ -2633,6 +2633,17 @@ footer.footer,
     line-height: var(--type-h1-lh) !important;
   }
 }
+.closing-cta__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+.closing-cta__actions .closing-cta__btn-primary,
+.closing-cta__actions .closing-cta__btn-secondary {
+  margin-bottom: 0;
+}
 
 /* ============================================================
    ABOUT PAGE — page-specific components for /about
