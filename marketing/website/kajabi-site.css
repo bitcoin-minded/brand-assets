@@ -1069,6 +1069,7 @@ footer.footer,
    ============================================================ */
 .email-capture {
   padding: var(--space-9) var(--space-8);
+  padding-bottom: var(--space-7);
   background-color: var(--color-paper-warm);
 }
 
