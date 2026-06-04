@@ -666,7 +666,7 @@ footer.footer,
   align-items: start;
 }
 .media-text--top{
-  padding-bottom: var(--space-7) !important;
+  padding-bottom: var(--space-5) !important;
 }
 
 /* ============================================================
