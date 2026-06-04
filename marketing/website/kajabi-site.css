@@ -651,9 +651,22 @@ footer.footer,
   }
 }
 
+@media (min-width: 768px) and (max-width: 1023px) {
+  .media-text--top .media-text__grid {
+    grid-template-columns: 1fr;
+  }
+  .media-text--top .media-text__image {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
 /* About page variant — top-aligns image with text for long content */
 .media-text--top .media-text__grid {
   align-items: start;
+}
+.media-text--top{
+  padding-bottom: var(--space-7) !important;
 }
 
 /* ============================================================
@@ -2895,7 +2908,7 @@ footer.footer,
 
 /* ---------- "How we make money" — operating principles ---------- */
 .about-operate {
-  background-color: var(--color-paper-warm);
+  background-color: var(--color-paper);
   border-top: 1px solid var(--color-rule);
   padding: var(--space-9) var(--space-8);
 }
