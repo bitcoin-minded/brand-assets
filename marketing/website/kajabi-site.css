@@ -2264,3 +2264,268 @@ footer.footer,
     line-height: var(--type-h1-lh) !important;
   }
 }
+/* ============================================================
+   ABOUT PAGE — page-specific components for /about
+   ------------------------------------------------------------
+   APPEND this block to kajabi-site.css (your single source of
+   truth). Everything is namespaced .about-* so it cannot collide
+   with any existing block. The About page otherwise reuses your
+   existing components: .media-text, .closing-cta, the global
+   <em> accent rule, headings, and base type.
+   ============================================================ */
+
+/* ---------- Contextual return bar ---------- */
+.about-returnbar {
+  background-color: var(--color-paper);
+  border-bottom: 1px solid var(--color-rule);
+  padding: 0 var(--space-8);
+}
+.about-returnbar__inner {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+.about-returnbar__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono) !important;
+  font-size: var(--type-trace);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-mute) !important;
+  white-space: nowrap;
+}
+.about-returnbar__link:hover { color: var(--color-imprint) !important; }
+.about-returnbar__link .about-arrow {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-left: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  margin-right: 2px;
+}
+@media (max-width: 1023px) { .about-returnbar { padding: 0 var(--space-7); } }
+@media (max-width: 767px)  { .about-returnbar { padding: 0 var(--space-5); } }
+
+/* ---------- Section marker (§ number · rule · label) ---------- */
+.about-marker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+}
+.about-marker--wide {
+  max-width: var(--container-wide);
+  margin-left: auto;
+  margin-right: auto;
+}
+.about-marker__num {
+  font-family: var(--font-mono);
+  font-size: var(--type-trace);
+  line-height: 1;
+  letter-spacing: 0.12em;
+  color: var(--color-imprint);
+  white-space: nowrap;
+}
+.about-marker__line { flex: 1; height: 1px; background-color: var(--color-rule); }
+.about-marker__label {
+  font-family: var(--font-mono);
+  font-size: var(--type-trace);
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink-mute);
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .about-marker { flex-wrap: wrap; gap: var(--space-3); }
+  .about-marker__num   { order: 1; }
+  .about-marker__label { order: 2; margin-left: auto; white-space: normal; }
+  .about-marker__line  { order: 3; flex: 0 0 100%; }
+}
+
+/* ---------- Page intro (text-only hero) ---------- */
+.about-intro {
+  background-color: var(--color-paper);
+  padding: var(--space-10) var(--space-8) var(--space-9);
+}
+.about-intro__inner { max-width: var(--container-default); margin: 0 auto; }
+.about-intro__emblem {
+  width: 36px;
+  height: 36px;
+  display: block;
+  margin-bottom: var(--space-7);
+  opacity: 0.92;
+}
+.about-intro__eyebrow {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-eyebrow);
+  line-height: var(--type-eyebrow-lh);
+  letter-spacing: var(--type-eyebrow-ls);
+  text-transform: uppercase;
+  color: var(--color-imprint);
+  margin-bottom: var(--space-3);
+}
+.about-intro__heading {
+  font-family: var(--font-display) !important;
+  font-weight: 500 !important;
+  font-size: var(--type-display) !important;
+  line-height: var(--type-display-lh) !important;
+  color: var(--color-ink) !important;
+  margin-bottom: var(--space-6);
+  max-width: 18ch;
+}
+.about-intro__lead {
+  font-family: var(--font-body);
+  font-size: var(--type-body-lg);
+  line-height: var(--type-body-lg-lh);
+  color: var(--color-ink);
+  max-width: 60ch;
+}
+@media (max-width: 1023px) { .about-intro { padding: var(--space-9) var(--space-7); } }
+@media (max-width: 767px)  { .about-intro { padding: var(--space-8) var(--space-5); } .about-intro__heading { max-width: none; } }
+
+/* ---------- Mission (Why Bitcoin-Minded exists) ---------- */
+.about-mission {
+  background-color: var(--color-paper-warm);
+  border-top: 1px solid var(--color-rule);
+  padding: var(--space-9) var(--space-8);
+}
+.about-mission__inner { max-width: var(--container-default); margin: 0 auto; }
+.about-mission__lead {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.32;
+  color: var(--color-ink);
+  margin-bottom: var(--space-6);
+  max-width: 32ch;
+  text-wrap: balance;
+}
+.about-mission__body {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+  color: var(--color-ink);
+  max-width: var(--container-narrow);
+  margin-bottom: var(--space-4);
+}
+.about-mission__body:last-child { margin-bottom: 0; }
+@media (max-width: 1023px) { .about-mission { padding: var(--space-8) var(--space-7); } }
+@media (max-width: 767px)  {
+  .about-mission { padding: var(--space-8) var(--space-5); }
+  .about-mission__lead { font-size: 24px; line-height: 1.34; max-width: none; }
+}
+
+/* ---------- Instructor stat chips (inside .media-text content) ---------- */
+.about-stats {
+  list-style: none;
+  padding: 0 0 var(--space-5) 0;
+  margin: 0 0 var(--space-6) 0;
+  border-bottom: 1px solid var(--color-rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+}
+.about-stats__item {
+  font-family: var(--font-mono);
+  font-size: var(--type-trace);
+  line-height: var(--type-trace-lh);
+  letter-spacing: 0.04em;
+  color: var(--color-ink-mute);
+  white-space: nowrap;
+}
+.about-stats__item b { color: var(--color-imprint); font-weight: 400; }
+
+/* ---------- "How we make money" — operating principles ---------- */
+.about-operate {
+  background-color: var(--color-paper-warm);
+  border-top: 1px solid var(--color-rule);
+  padding: var(--space-9) var(--space-8);
+}
+.about-operate__inner { max-width: var(--container-default); margin: 0 auto; }
+.about-operate__heading {
+  font-family: var(--font-display) !important;
+  font-weight: 500 !important;
+  font-size: var(--type-h1) !important;
+  line-height: var(--type-h1-lh) !important;
+  color: var(--color-ink) !important;
+  margin-bottom: var(--space-5);
+  max-width: 20ch;
+}
+.about-operate__intro {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+  color: var(--color-ink);
+  max-width: var(--container-narrow);
+  margin-bottom: var(--space-8);
+}
+.about-principles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--space-8);
+  border-top: 1px solid var(--color-rule-strong);
+}
+.about-principle {
+  display: grid;
+  grid-template-columns: var(--space-7) 1fr;
+  gap: var(--space-5);
+  padding: var(--space-6) 0;
+  border-bottom: 1px solid var(--color-rule);
+}
+.about-principle__num {
+  font-family: var(--font-mono);
+  font-size: var(--type-trace);
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  color: var(--color-imprint);
+}
+.about-principle__title {
+  font-family: var(--font-display) !important;
+  font-weight: 500 !important;
+  font-size: var(--type-h4) !important;
+  line-height: var(--type-h4-lh) !important;
+  color: var(--color-ink) !important;
+  margin-bottom: var(--space-3);
+}
+.about-principle__body {
+  font-family: var(--font-body);
+  font-size: var(--type-body-sm);
+  line-height: var(--type-body-sm-lh);
+  color: var(--color-ink-mute);
+  margin: 0;
+}
+@media (max-width: 1023px) { .about-operate { padding: var(--space-8) var(--space-7); } }
+@media (max-width: 767px)  {
+  .about-operate { padding: var(--space-8) var(--space-5); }
+  .about-principles { grid-template-columns: 1fr; gap: 0; }
+}
+
+/* ---------- Closing CTA — eyebrow + body added to .closing-cta ---------- */
+.about-cta .closing-cta__heading { margin-bottom: var(--space-5); }
+.about-cta__eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-eyebrow);
+  line-height: var(--type-eyebrow-lh);
+  letter-spacing: var(--type-eyebrow-ls);
+  text-transform: uppercase;
+  color: var(--color-ink-mute);
+  margin-bottom: var(--space-5);
+}
+.about-cta__body {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+  color: var(--color-ink);
+  max-width: 52ch;
+  margin-bottom: var(--space-7);
+}
