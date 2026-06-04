@@ -2399,13 +2399,13 @@ footer.footer,
 }
 .about-mission__inner { max-width: var(--container-default); margin: 0 auto; }
 .about-mission__lead {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 1.32;
-  color: var(--color-ink);
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+  font-size: 30px !important;
+  line-height: 1.32 !important;
+  color: var(--color-ink) !important;
   margin-bottom: var(--space-6);
-  max-width: 32ch;
+  max-width: 32ch !important;
   text-wrap: balance;
 }
 .about-mission__body {
