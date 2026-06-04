@@ -522,6 +522,10 @@ footer.footer,
   }
 }
 
+/* About page variant — top-aligns image with text for long content */
+.media-text--top .media-text__grid {
+  align-items: start;
+}
 
 /* ============================================================
    PROSE BLOCK
@@ -2407,7 +2411,7 @@ footer.footer,
   margin-left: auto !important;
   margin-right: auto !important;
   margin-bottom: var(--space-6);
-  max-width: 32ch !important;
+  max-width: var(--container-narrow) !important;
   text-wrap: balance;
 }
 .about-mission__body {
