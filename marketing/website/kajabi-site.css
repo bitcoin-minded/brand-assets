@@ -175,6 +175,22 @@ header.header--static .header__block--dropdown {
   margin-right: var(--space-2) !important;
 }
 
+/* Dropdown hover — per-course imprint colors */
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/people"]:hover,
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/people"]:focus {
+  color: var(--color-imprint-bfp) !important;
+}
+
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/business"]:hover,
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/business"]:focus {
+  color: var(--color-imprint-bfb) !important;
+}
+
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/advisors"]:hover,
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/advisors"]:focus {
+  color: var(--color-imprint-bfa) !important;
+}
+
 header.header--static .header__block--menu {
   padding-top: 6px !important;
   margin-right: var(--space-0) !important;
