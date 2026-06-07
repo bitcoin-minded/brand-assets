@@ -1122,6 +1122,12 @@ footer.footer,
   margin-top: calc(-1 * var(--space-10)) !important;
 }
 
+@media (min-width: 768px) and (max-width: 900px) {
+  .block-type--form.text-left {
+    margin-top: calc(-1 * var(--space-7)) !important;
+  }
+}
+
 .block-type--form .block.box-shadow- {
   padding: 0 !important;
   overflow: visible !important;
