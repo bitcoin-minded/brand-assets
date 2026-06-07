@@ -1124,7 +1124,7 @@ footer.footer,
 
 @media (min-width: 768px) and (max-width: 900px) {
   .block-type--form.text-left {
-    margin-top: calc(-1 * var(--space-7)) !important;
+    margin-top: calc(-1 * var(--space-8)) !important;
   }
 }
 
