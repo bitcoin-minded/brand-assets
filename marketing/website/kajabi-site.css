@@ -1842,6 +1842,12 @@ footer.footer,
   margin-bottom: var(--space-4);
 }
 
+.lesson-preview__caption {
+  font-size: var(--type-caption);
+  color: var(--color-ink-mute);
+  margin-top: var(--space-3);
+}
+
 .lesson-frame {
   position: relative;
   border-radius: var(--radius-2);
