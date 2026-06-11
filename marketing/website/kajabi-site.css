@@ -2496,7 +2496,7 @@ footer.footer,
 .course-index__row--bfb { --course-imprint: var(--color-imprint-bfb); }
 .course-index__row--bfa { --course-imprint: var(--color-imprint-bfa); }
 
-.course-index__row:hover {
+.course-index .course-index__row:hover {
   background-color: var(--color-paper-warm) !important;
 }
 
