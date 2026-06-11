@@ -2497,7 +2497,7 @@ footer.footer,
 .course-index__row--bfa { --course-imprint: var(--color-imprint-bfa); }
 
 .course-index__row:hover {
-  background-color: var(--color-paper-warm);
+  background-color: var(--color-paper-warm) !important;
 }
 
 .course-index__row:hover .course-index__arrow {
