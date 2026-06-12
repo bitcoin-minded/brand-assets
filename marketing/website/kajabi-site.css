@@ -3134,6 +3134,15 @@ footer.footer,
   }
 }
 
+/* ---------- Pasco signature (Meet instructor / note treatment) ---------- */
+.about-signature {
+  width: auto;
+  height: 64px;
+  display: block;
+  margin: var(--space-2) 0 var(--space-6);
+  opacity: 0.88;
+}
+
 /* ---------- Closing CTA — eyebrow + body added to .closing-cta ---------- */
 .about-cta .closing-cta__heading {
   margin-bottom: var(--space-5);
