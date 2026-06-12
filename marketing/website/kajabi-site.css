@@ -27,6 +27,16 @@
   --color-imprint: var(--color-imprint-bfa);
 }
 
+/* Cancel Kajabi's global brightness filter on all hover states.
+   Kajabi's styles.css applies brightness(115%-120%) to a:hover and
+   .form-btn:hover which washes out our imprint color tokens. */
+a:hover,
+button:hover,
+.btn:hover,
+.form-btn:hover,
+[class*="btn"]:hover {
+  filter: none !important;
+}
 
 /* ---------- Base body ---------- */
 
@@ -2561,7 +2571,6 @@ footer.footer,
 
 .course-index__row:hover {
   background-color: var(--color-paper-warm) !important;
-  filter: none !important; /* cancels Kajabi theme's a:hover brightness(115%) wash */
 }
 
 .course-index__row:hover .course-index__arrow {
