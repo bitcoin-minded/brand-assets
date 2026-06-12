@@ -1410,6 +1410,69 @@ footer.footer,
 }
 
 /* ============================================================
+   STAT LINE — inline divider with centered stat
+   ============================================================ */
+
+.stat-line {
+  padding: var(--space-8) var(--space-8) var(--space-3);
+  background-color: var(--color-paper);
+}
+
+.stat-line__row {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.stat-line__rule {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-rule);
+  display: block;
+}
+
+.stat-line__group {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  white-space: nowrap;
+}
+
+.stat-line__num {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.stat-line__label {
+  font-family: var(--font-mono);
+  font-size: var(--type-trace);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-mute);
+}
+
+@media (max-width: 767px) {
+  .stat-line {
+    padding: var(--space-7) var(--space-5) var(--space-4);
+  }
+
+  .stat-line__row {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .stat-line__rule {
+    flex: none;
+    width: 56px;
+  }
+}
+
+/* ============================================================
    RULED LIST
    ============================================================ */
 
