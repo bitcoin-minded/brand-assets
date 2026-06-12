@@ -3136,8 +3136,9 @@ footer.footer,
 
 /* ---------- Pasco signature (Meet instructor / note treatment) ---------- */
 .about-signature {
-  width: auto;
-  height: 64px;
+  width: auto !important;
+  height: 56px !important;
+  max-width: 180px !important;
   display: block;
   margin: var(--space-2) 0 var(--space-6);
   opacity: 0.88;
