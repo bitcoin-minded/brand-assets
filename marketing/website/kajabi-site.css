@@ -1,4 +1,4 @@
-@import url("https://cdn.jsdelivr.net/gh/bitcoin-minded/brand-assets@v1.50/marketing/website/brand-tokens.css");
+@import url("https://cdn.jsdelivr.net/gh/bitcoin-minded/brand-assets@v1.51/marketing/website/brand-tokens.css");
 
 /* ============================================================
    BITCOIN-MINDED — FULL KAJABI SITE-WIDE STYLES
@@ -3441,7 +3441,8 @@ footer.footer,
 }
 @media (max-width: 1023px) {
   .fp-gate__locked { grid-template-columns: 1fr; gap: var(--space-6); }
-  .fp-gate__photo { order: 2; align-self: start; width: 100%; aspect-ratio: 21 / 9; max-width: 640px; }
+  .fp-gate__photo { order: 2; align-self: start; width: 100%; max-width: 640px; }
+  .fp-gate__photo img { position: static; height: auto; }
 }
 
 /* Unlocked confirmation (hidden until unlocked) */
