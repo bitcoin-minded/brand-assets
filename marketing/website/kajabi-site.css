@@ -1,4 +1,4 @@
-@import url("https://cdn.jsdelivr.net/gh/bitcoin-minded/brand-assets@v1.48/marketing/website/brand-tokens.css");
+@import url("https://cdn.jsdelivr.net/gh/bitcoin-minded/brand-assets@v1.49/marketing/website/brand-tokens.css");
 
 /* ============================================================
    BITCOIN-MINDED — FULL KAJABI SITE-WIDE STYLES
@@ -27,6 +27,16 @@
   --color-imprint: var(--color-imprint-bfa);
 }
 
+/* Cancel Kajabi's global brightness filter on all hover states.
+   Kajabi's styles.css applies brightness(115%-120%) to a:hover and
+   .form-btn:hover which washes out our imprint color tokens. */
+a:hover,
+button:hover,
+.btn:hover,
+.form-btn:hover,
+[class*="btn"]:hover {
+  filter: none !important;
+}
 
 /* ---------- Base body ---------- */
 
@@ -173,6 +183,22 @@ header.header--static div.header__content--desktop {
 
 header.header--static .header__block--dropdown {
   margin-right: var(--space-2) !important;
+}
+
+/* Dropdown hover — per-course imprint colors */
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/people"]:hover,
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/people"]:focus {
+  color: var(--color-imprint-bfp) !important;
+}
+
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/business"]:hover,
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/business"]:focus {
+  color: var(--color-imprint-bfb) !important;
+}
+
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/advisors"]:hover,
+.header__block--dropdown a[href*="https://www.bitcoin-minded.com/course/advisors"]:focus {
+  color: var(--color-imprint-bfa) !important;
 }
 
 header.header--static .header__block--menu {
@@ -378,142 +404,6 @@ footer.footer,
   .accent-rule {
     width: 40px;
     margin-bottom: var(--space-4);
-  }
-}
-
-
-/* ============================================================
-   COURSE CARDS — three-up grid on home page
-   ============================================================ */
-
-.course-cards {
-  padding: var(--space-9) var(--space-8);
-}
-
-.course-cards__intro {
-  max-width: var(--container-wide);
-  margin: 0 auto var(--space-7) auto;
-}
-
-.course-cards__heading {
-  font-family: var(--font-display) !important;
-  font-weight: 500 !important;
-  font-size: var(--type-h1) !important;
-  line-height: var(--type-h1-lh) !important;
-  color: var(--color-ink) !important;
-  margin-bottom: 0;
-}
-
-.course-cards__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-  max-width: var(--container-wide);
-  margin: 0 auto;
-}
-
-.course-card {
-  background-color: var(--color-paper-warm);
-  border-radius: var(--radius-2);
-  padding: var(--space-7) var(--space-6);
-  display: flex;
-  flex-direction: column;
-  border-top: 3px solid var(--card-imprint);
-}
-
-.course-card--bfp {
-  --card-imprint: var(--color-imprint-bfp);
-}
-
-.course-card--bfb {
-  --card-imprint: var(--color-imprint-bfb);
-}
-
-.course-card--bfa {
-  --card-imprint: var(--color-imprint-bfa);
-}
-
-.course-card__eyebrow {
-  font-family: var(--font-mono);
-  font-weight: 400;
-  font-size: var(--type-trace);
-  line-height: var(--type-trace-lh);
-  color: var(--color-ink-mute);
-  letter-spacing: var(--type-eyebrow-ls);
-  text-transform: uppercase;
-  margin-bottom: var(--space-3);
-}
-
-.course-card__title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: var(--type-h3);
-  line-height: var(--type-h3-lh);
-  color: var(--card-imprint);
-  margin-bottom: var(--space-5);
-}
-
-.course-card__subhead {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: var(--type-body);
-  line-height: var(--type-body-lh);
-  color: var(--color-ink);
-  margin-bottom: var(--space-4);
-}
-
-.course-card__body {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: var(--type-body);
-  line-height: var(--type-body-lh);
-  color: var(--color-ink);
-  flex: 1;
-  margin-bottom: var(--space-6);
-}
-
-.course-card__links {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  margin-top: auto;
-}
-
-.course-card__link {
-  font-family: var(--font-body) !important;
-  font-weight: 400 !important;
-  font-size: var(--type-body-sm) !important;
-  color: var(--card-imprint) !important;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: opacity var(--transition-fast);
-}
-
-.course-card__link:hover {
-  opacity: 0.75 !important;
-  color: var(--card-imprint) !important;
-}
-
-@media (max-width: 1023px) {
-  .course-cards {
-    padding: var(--space-8) var(--space-7);
-  }
-
-  /* Collapse to single column on tablet — three narrow cards
-     are too cramped to read comfortably at this width */
-  .course-cards__grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-  }
-}
-
-@media (max-width: 767px) {
-  .course-cards {
-    padding: var(--space-8) var(--space-5);
-  }
-
-  .course-card__title {
-    font-size: var(--type-h3);
   }
 }
 
@@ -1122,6 +1012,12 @@ footer.footer,
   margin-top: calc(-1 * var(--space-10)) !important;
 }
 
+@media (min-width: 768px) and (max-width: 900px) {
+  .block-type--form.text-left {
+    margin-top: calc(-1 * var(--space-9)) !important;
+  }
+}
+
 .block-type--form .block.box-shadow- {
   padding: 0 !important;
   overflow: visible !important;
@@ -1524,6 +1420,69 @@ footer.footer,
 }
 
 /* ============================================================
+   STAT LINE — inline divider with centered stat
+   ============================================================ */
+
+.stat-line {
+  padding: var(--space-8) var(--space-8) var(--space-3);
+  background-color: var(--color-paper);
+}
+
+.stat-line__row {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.stat-line__rule {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-rule);
+  display: block;
+}
+
+.stat-line__group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  white-space: nowrap;
+}
+
+.stat-line__num {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.stat-line__label {
+  font-family: var(--font-mono);
+  font-size: var(--type-trace);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-mute);
+}
+
+@media (max-width: 767px) {
+  .stat-line {
+    padding: var(--space-7) var(--space-5) var(--space-4);
+  }
+
+  .stat-line__row {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .stat-line__rule {
+    flex: none;
+    width: 56px;
+  }
+}
+
+/* ============================================================
    RULED LIST
    ============================================================ */
 
@@ -1818,6 +1777,12 @@ footer.footer,
   color: var(--color-ink);
   max-width: 480px;
   margin-bottom: var(--space-4);
+}
+
+.lesson-preview__caption {
+  font-size: var(--type-caption);
+  color: var(--color-ink-mute);
+  margin-top: var(--space-3);
 }
 
 .lesson-frame {
@@ -2548,6 +2513,170 @@ footer.footer,
 
 
 /* ============================================================
+   COURSE INDEX — editorial index rows (homepage course selector)
+   Replaces the .course-cards three-up grid.
+   ============================================================ */
+
+.course-index {
+  padding: var(--space-9) var(--space-8);
+}
+
+.course-index__inner {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+}
+
+.course-index__intro {
+  margin-bottom: var(--space-7);
+}
+
+.course-index__heading {
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+  font-size: var(--type-h2) !important;
+  line-height: var(--type-h2-lh) !important;
+  color: var(--color-ink) !important;
+  margin: 0;
+}
+
+.course-index__rows {
+  border-top: 1px solid var(--color-rule);
+}
+
+.course-index__row {
+  display: grid;
+  grid-template-columns: 300px 1fr 48px;
+  gap: var(--space-7);
+  align-items: start;
+  padding: var(--space-7) var(--space-5) var(--space-7) var(--space-6);
+  border-bottom: 1px solid var(--color-rule);
+  text-decoration: none !important;
+  position: relative;
+  transition: background-color var(--transition-fast);
+}
+
+.course-index__row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: var(--space-6);
+  bottom: var(--space-6);
+  width: 2px;
+  background-color: var(--course-imprint);
+}
+
+.course-index__row--bfp { --course-imprint: var(--color-imprint-bfp); }
+.course-index__row--bfb { --course-imprint: var(--color-imprint-bfb); }
+.course-index__row--bfa { --course-imprint: var(--color-imprint-bfa); }
+
+.course-index__row:hover {
+  background-color: var(--color-paper-warm) !important;
+}
+
+.course-index__row:hover .course-index__arrow {
+  transform: translateX(8px);
+}
+
+.course-index__meta {
+  display: block;
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase;
+  color: var(--course-imprint) !important;
+  margin-bottom: var(--space-2);
+}
+
+.course-index__title {
+  font-family: var(--font-display) !important;
+  font-weight: 500 !important;
+  font-size: 28px !important;
+  line-height: 1.15 !important;
+  color: var(--color-ink) !important;
+  margin: 0;
+}
+
+.course-index__content {
+  padding-top: 4px;
+}
+
+.course-index__sub {
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: var(--type-body) !important;
+  line-height: var(--type-body-lh) !important;
+  color: var(--color-ink) !important;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.course-index__body {
+  font-family: var(--font-body) !important;
+  font-weight: 400 !important;
+  font-size: var(--type-body-sm) !important;
+  line-height: var(--type-body-sm-lh) !important;
+  color: var(--color-ink-mute) !important;
+  max-width: 56ch;
+  margin: 0;
+}
+
+/* Scoped to override the global a:hover { color: !important } rule */
+.course-index__row .course-index__arrow {
+  font-size: 22px;
+  color: var(--course-imprint) !important;
+  justify-self: end;
+  align-self: center;
+  transition: transform var(--transition-fast);
+  display: block;
+  line-height: 1;
+  text-decoration: none !important;
+}
+
+@media (max-width: 1023px) {
+  .course-index {
+    padding: var(--space-8) var(--space-7);
+  }
+
+  .course-index__row {
+    grid-template-columns: 220px 1fr 40px;
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 767px) {
+  .course-index {
+    padding: var(--space-8) var(--space-5);
+  }
+
+  .course-index__row {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: var(--space-4);
+    padding: var(--space-6) var(--space-4) var(--space-6) var(--space-6);
+  }
+
+  .course-index__left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .course-index__row .course-index__arrow {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+    justify-self: end;
+    margin-top: 4px;
+  }
+
+  .course-index__content {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding-top: 0;
+  }
+}
+
+
+/* ============================================================
    CLOSING CTA BAND
    ============================================================ */
 
@@ -3003,6 +3132,16 @@ footer.footer,
     grid-template-columns: 1fr;
     gap: 0;
   }
+}
+
+/* ---------- Pasco signature (Meet instructor / note treatment) ---------- */
+.about-signature {
+  width: auto !important;
+  height: 56px !important;
+  max-width: 180px !important;
+  display: block;
+  margin: var(--space-2) 0 var(--space-6);
+  opacity: 0.88;
 }
 
 /* ---------- Closing CTA — eyebrow + body added to .closing-cta ---------- */
