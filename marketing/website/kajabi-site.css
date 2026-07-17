@@ -1,4 +1,4 @@
-@import url("https://cdn.jsdelivr.net/gh/bitcoin-minded/brand-assets@v1.49/marketing/website/brand-tokens.css");
+@import url("https://cdn.jsdelivr.net/gh/bitcoin-minded/brand-assets@v1.50/marketing/website/brand-tokens.css");
 
 /* ============================================================
    BITCOIN-MINDED — FULL KAJABI SITE-WIDE STYLES
@@ -3190,6 +3190,27 @@ footer.footer,
   padding-left: 0 !important;
   padding-right: 0 !important;
   max-width: 100% !important;
+}
+
+/* ---------- About: instructor photo pair (portrait + detail) ---------- */
+.about-media-pair {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.about-media-pair figure { margin: 0; }
+.about-media-pair__portrait img.media-text__image {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 55% 30%;
+}
+.about-media-pair__detail img.media-text__image {
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: 55% 45%;
+}
+@media (max-width: 767px) {
+  .about-media-pair__portrait img.media-text__image { aspect-ratio: 4 / 4.5; }
 }
 
 /* ============================================================
