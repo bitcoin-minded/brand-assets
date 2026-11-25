@@ -41,7 +41,26 @@
   });
 
   // ---------- Log-in ----------
-  if (/^\/login(\/|$)/.test(path)) { addStyle(FIELDS); return; }
+  if (/^\/login(\/|$)/.test(path)) {
+    addStyle(FIELDS);
+    // No «Remember Me» (owner 2026-11-25): a student is never marked to be remembered; the box stays unticked and hidden.
+    ready(function () {
+      var cb = document.querySelector('input[type="checkbox"][name*="remember" i], input[type="checkbox"][id*="remember" i]');
+      if (!cb) {
+        document.querySelectorAll('label').forEach(function (l) {
+          if (!cb && /remember me/i.test(l.textContent)) cb = l.querySelector('input[type="checkbox"]') || document.getElementById(l.htmlFor);
+        });
+      }
+      if (!cb) return;
+      cb.checked = false;
+      var row = cb.closest('label') || cb.parentNode;
+      if (row && row.querySelectorAll('input').length === 1 && !row.querySelector('button, [type="submit"]')) row.style.display = 'none';
+      else cb.style.display = 'none';
+      var lab = cb.id && document.querySelector('label[for="' + cb.id + '"]');
+      if (lab) lab.style.display = 'none';
+    });
+    return;
+  }
 
   // ---------- Library: Kajabi's header with member links; footer lined up with the content ----------
   if (/^\/library(\/|$)/.test(path)) {
