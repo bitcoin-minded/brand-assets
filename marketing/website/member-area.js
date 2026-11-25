@@ -1,31 +1,64 @@
 /* ============================================================
-   BITCOIN-MINDED — member area script
-   Course pages:  <script src="…/member-area.js" data-course="BFP|BFB|BFA"></script>
-                  in the course's Settings → Custom Code (with member-area.css).
-   Library:       loaded from the website theme's Custom Javascript box with data-course="SITE".
+   BITCOIN-MINDED — site + member-area script (one file, one place)
+   Loaded ONCE, from Kajabi's site-wide header code, next to kajabi-site.css, same version:
+     <script src="https://cdn.jsdelivr.net/gh/bitcoin-minded/brand-assets@vX.YY/marketing/website/member-area.js"></script>
+   It decides by the page address what to do:
+     /products/…  course pages  → member-area.css (same version) + member header + ink footer + previews
+     /library…    library       → Kajabi header with member links, footer lined up
+     /login …     log-in        → Paper text fields
+     every page   footer blocks → ink logo
    ============================================================ */
 (function () {
+  if (window.__bmMemberArea) return;          // never run twice
+  window.__bmMemberArea = true;
+
   var me = document.currentScript;
-  var course = ((me && me.dataset && me.dataset.course) || 'SITE').toUpperCase();
+  var BASE = me && me.src ? me.src.replace(/member-area\.js.*$/, '') : '';
   var LOGOS = 'https://cdn.jsdelivr.net/gh/bitcoin-minded/brand-assets@v1.55/brand/logos/';
   var IMPRINT = { BFP: '#8C6A2F', BFB: '#2D4A47', BFA: '#1F2748' };
+  var path = location.pathname;
 
   function ready(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
     else fn();
   }
+  function addStyle(css) {
+    var st = document.createElement('style');
+    st.textContent = css;
+    document.head.appendChild(st);
+  }
+  var FIELDS =
+    'textarea, input[type="text"], input[type="email"], input[type="password"], input[type="search"], select' +
+    ' { background: #F4EFE6 !important; border: 1px solid #D8CDB8 !important; color: #1A1714 !important; box-shadow: none !important; }' +
+    'textarea:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="search"]:focus, select:focus' +
+    ' { border-color: #5A4F45 !important; outline: none !important; }';
 
-  // ---------- Library (website theme): Kajabi's header, member links instead of visitor items ----------
-  if (course === 'SITE') {
-    // Footer logo on every site page that uses our footer blocks: the all-ink lockup (owner 2026-11-25).
-    ready(function () {
-      document.querySelectorAll('#bm-footer-landing .ft-lockup img, #bm-footer-company .ft-lockup img').forEach(function (img) {
-        img.src = LOGOS + 'BRAND_Lockup_primary.svg';
-      });
+  // ---------- Every page: our footer blocks carry the all-ink lockup (owner 2026-11-25) ----------
+  ready(function () {
+    document.querySelectorAll('#bm-footer-landing .ft-lockup img, #bm-footer-company .ft-lockup img').forEach(function (img) {
+      img.src = LOGOS + 'BRAND_Lockup_primary.svg';
     });
-    if (!/^\/library(\/|$)/.test(location.pathname)) return;
-    // Library footer block (#bm-footer-landing): line its logo and © up with the library's content column.
+  });
+
+  // ---------- Log-in ----------
+  if (/^\/login(\/|$)/.test(path)) { addStyle(FIELDS); return; }
+
+  // ---------- Library: Kajabi's header with member links; footer lined up with the content ----------
+  if (/^\/library(\/|$)/.test(path)) {
+    addStyle(FIELDS +
+      'header.header--static .header__block--dropdown,' +
+      'header.header--static .header__block--menu,' +
+      'header.header--static .header__block--cta,' +
+      'header.header--static .header__block--user { display: none !important; }' +
+      '.bm-member-nav { display: flex !important; align-items: center; gap: 32px; }');
     ready(function () {
+      var user = document.querySelector('header.header--static .header__block--user');
+      if (user && !document.querySelector('.bm-member-nav')) {
+        var nav = document.createElement('div');
+        nav.className = 'header__block bm-member-nav';
+        nav.innerHTML = '<a href="/library">My Learning</a><a href="/settings/account">Account</a><a href="/logout">Logout</a>';
+        user.parentNode.insertBefore(nav, user);
+      }
       var inner = document.querySelector('#bm-footer-landing .ft-inner');
       var ref = document.querySelector('.section .container') || document.querySelector('.container');
       if (!inner || !ref) return;
@@ -40,42 +73,40 @@
       align();
       window.addEventListener('resize', align);
     });
-    var st = document.createElement('style');
-    st.textContent =
-      'header.header--static .header__block--dropdown,' +
-      'header.header--static .header__block--menu,' +
-      'header.header--static .header__block--cta,' +
-      'header.header--static .header__block--user { display: none !important; }' +
-      '.bm-member-nav { display: flex !important; align-items: center; gap: 32px; }';
-    document.head.appendChild(st);
-    ready(function () {
-      var user = document.querySelector('header.header--static .header__block--user');
-      if (!user || document.querySelector('.bm-member-nav')) return;
-      var nav = document.createElement('div');
-      nav.className = 'header__block bm-member-nav';
-      nav.innerHTML = '<a href="/library">My Learning</a><a href="/settings/account">Account</a><a href="/logout">Logout</a>';
-      user.parentNode.insertBefore(nav, user);
-    });
     return;
   }
 
-  // ---------- Course pages (product theme) ----------
-  if (IMPRINT[course]) document.documentElement.style.setProperty('--bm-imprint', IMPRINT[course]);
-  ready(function () {
-    var h = document.createElement('div');
-    h.className = 'bm-header';
-    h.innerHTML = '<div class="bm-header__inner">' +
-      '<a href="/library"><img src="' + LOGOS + 'BRAND_Lockup_twotone-' + (IMPRINT[course] ? course : 'terracotta') + '.svg" alt="Bitcoin-Minded"></a>' +
-      '<nav><a href="/library">My Learning</a><a href="/settings/account">Account</a><a href="/logout">Logout</a></nav></div>';
-    document.body.insertBefore(h, document.body.firstChild);
+  // ---------- Course pages (/products/…) ----------
+  if (!/^\/products\//.test(path)) return;
 
-    var ft = document.createElement('div');
-    ft.className = 'bm-footer';
-    ft.innerHTML = '<div class="bm-footer__inner">' +
-      '<a href="/library"><img src="' + LOGOS + 'BRAND_Lockup_primary.svg" alt="Bitcoin-Minded"></a>' +
-      '<div class="bm-footer__right"><a href="/privacy">Privacy</a><span class="bm-footer__sep">·</span><a href="/terms">Terms</a><span class="bm-footer__sep">·</span><a href="/contact">Contact</a>' +
-      '<span class="bm-footer__pipe">|</span><span>© ' + new Date().getFullYear() + ' Bitcoin-Minded Intl.</span></div></div>';
-    document.body.appendChild(ft);
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = BASE + 'member-area.css';
+  document.head.appendChild(link);
+
+  ready(function () {
+    // Which course: from the page title / breadcrumb (course names never change, ids might).
+    var label = document.title + ' ' + ((document.querySelector('.breadcrumbs') || {}).textContent || '');
+    var course = /business/i.test(label) ? 'BFB' : /advisor/i.test(label) ? 'BFA' : /people/i.test(label) ? 'BFP' : '';
+    if (IMPRINT[course]) document.documentElement.style.setProperty('--bm-imprint', IMPRINT[course]);
+
+    if (!document.querySelector('.bm-header')) {
+      var h = document.createElement('div');
+      h.className = 'bm-header';
+      h.innerHTML = '<div class="bm-header__inner">' +
+        '<a href="/library"><img src="' + LOGOS + 'BRAND_Lockup_twotone-' + (course || 'terracotta') + '.svg" alt="Bitcoin-Minded"></a>' +
+        '<nav><a href="/library">My Learning</a><a href="/settings/account">Account</a><a href="/logout">Logout</a></nav></div>';
+      document.body.insertBefore(h, document.body.firstChild);
+    }
+    if (!document.querySelector('.bm-footer')) {
+      var ft = document.createElement('div');
+      ft.className = 'bm-footer';
+      ft.innerHTML = '<div class="bm-footer__inner">' +
+        '<a href="/library"><img src="' + LOGOS + 'BRAND_Lockup_primary.svg" alt="Bitcoin-Minded"></a>' +
+        '<div class="bm-footer__right"><a href="/privacy">Privacy</a><span class="bm-footer__sep">·</span><a href="/terms">Terms</a><span class="bm-footer__sep">·</span><a href="/contact">Contact</a>' +
+        '<span class="bm-footer__pipe">|</span><span>© ' + new Date().getFullYear() + ' Bitcoin-Minded Intl.</span></div></div>';
+      document.body.appendChild(ft);
+    }
 
     function bmAlign() {
       var ref = document.querySelector('.section-wrap .container') || document.querySelector('.container:not(.container--main)');
@@ -96,7 +127,6 @@
     window.addEventListener('resize', bmAlign);
 
     // Syllabus previews start with the body's first subhead («What You Will Learn …»): strip it there.
-    // On the lesson page that subhead is its own heading (text = exactly the label), so it is never touched.
     var LEAD = /^\s*What You Will Learn\s+/;
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     var n;
