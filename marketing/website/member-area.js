@@ -17,7 +17,29 @@
 
   // ---------- Library (website theme): Kajabi's header, member links instead of visitor items ----------
   if (course === 'SITE') {
+    // Footer logo on every site page that uses our footer blocks: the all-ink lockup (owner 2026-11-25).
+    ready(function () {
+      document.querySelectorAll('#bm-footer-landing .ft-lockup img, #bm-footer-company .ft-lockup img').forEach(function (img) {
+        img.src = LOGOS + 'BRAND_Lockup_primary.svg';
+      });
+    });
     if (!/^\/library(\/|$)/.test(location.pathname)) return;
+    // Library footer block (#bm-footer-landing): line its logo and © up with the library's content column.
+    ready(function () {
+      var inner = document.querySelector('#bm-footer-landing .ft-inner');
+      var ref = document.querySelector('.section .container') || document.querySelector('.container');
+      if (!inner || !ref) return;
+      function align() {
+        if (window.innerWidth < 768) { inner.style.maxWidth = ''; inner.style.paddingLeft = ''; inner.style.paddingRight = ''; return; }
+        var cs = getComputedStyle(ref);
+        inner.style.boxSizing = 'border-box';
+        inner.style.maxWidth = ref.getBoundingClientRect().width + 'px';
+        inner.style.paddingLeft = cs.paddingLeft;
+        inner.style.paddingRight = cs.paddingRight;
+      }
+      align();
+      window.addEventListener('resize', align);
+    });
     var st = document.createElement('style');
     st.textContent =
       'header.header--static .header__block--dropdown,' +
