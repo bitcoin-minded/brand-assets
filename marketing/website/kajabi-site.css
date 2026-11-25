@@ -201,6 +201,28 @@ header.header--static .header__block--dropdown {
   color: var(--color-imprint-bfa) !important;
 }
 
+/* Courses dropdown panel — Paper, not Kajabi's white; items left-aligned (owner 2026-11-25).
+   Hover keeps the per-course imprint text colour above and gets a Paper-warm row. */
+.header__block--dropdown .dropdown__menu,
+.header__block--dropdown [class*="dropdown__menu"] {
+  background-color: var(--color-paper) !important;
+  border: 1px solid var(--color-rule) !important;
+  box-shadow: 0 8px 24px rgba(26, 23, 20, 0.08) !important;
+  text-align: left !important;
+}
+.header__block--dropdown .dropdown__menu a,
+.header__block--dropdown [class*="dropdown__menu"] a {
+  text-align: left !important;
+  justify-content: flex-start !important;
+  background-color: transparent !important;
+}
+.header__block--dropdown .dropdown__menu a:hover,
+.header__block--dropdown .dropdown__menu a:focus,
+.header__block--dropdown [class*="dropdown__menu"] a:hover,
+.header__block--dropdown [class*="dropdown__menu"] a:focus {
+  background-color: var(--color-paper-warm) !important;
+}
+
 header.header--static .header__block--menu {
   padding-top: 6px !important;
   margin-right: var(--space-0) !important;
