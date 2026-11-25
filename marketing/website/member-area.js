@@ -90,7 +90,11 @@
       'header.header--static .header__block--menu,' +
       'header.header--static .header__block--cta,' +
       'header.header--static .header__block--user { display: none !important; }' +
-      '.bm-member-nav { display: flex !important; align-items: center; gap: 32px; }');
+      '.bm-member-nav { display: flex !important; align-items: center; gap: 32px; }' +
+      // Progress track in Rule, like the course page (Kajabi draws it in a generic grey).
+      '.progress__bar, [class*="progress__bar"] { background: #D8CDB8 !important; }' +
+      // Each course row sits on a Paper-warm card, as on the course page, so the thumbnail's Paper band reads.
+      '.bm-product-card { background: #EBE3D4 !important; padding: 32px !important; box-sizing: border-box; }');
     ready(function () {
       var user = document.querySelector('header.header--static .header__block--user');
       if (user && !document.querySelector('.bm-member-nav')) {
@@ -100,6 +104,13 @@
         user.parentNode.insertBefore(nav, user);
         wireMemberLinks(nav);
       }
+      // Course rows: the smallest block that holds both the course image and its «Enter» button.
+      Array.prototype.forEach.call(document.querySelectorAll('a, button'), function (b) {
+        if (!/^\s*enter\s*$/i.test(b.textContent)) return;
+        var row = b.parentNode;
+        while (row && row !== document.body && !row.querySelector('img')) row = row.parentNode;
+        if (row && row !== document.body && !row.closest('.bm-product-card')) row.classList.add('bm-product-card');
+      });
       var inner = document.querySelector('#bm-footer-landing .ft-inner');
       var ref = document.querySelector('.section .container') || document.querySelector('.container');
       if (!inner || !ref) return;
