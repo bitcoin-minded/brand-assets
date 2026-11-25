@@ -111,6 +111,30 @@
         while (row && row !== document.body && !row.querySelector('img')) row = row.parentNode;
         if (row && row !== document.body && !row.closest('.bm-product-card')) row.classList.add('bm-product-card');
       });
+      // Progress bars on the cards: Kajabi draws a grey (#EEEEEE) track inside a Paper box. Make it the course
+      // page's look: no box, a Rule track, the course's imprint colour for the progress made.
+      Array.prototype.forEach.call(document.querySelectorAll('.bm-product-card'), function (card) {
+        var label = card.textContent;
+        var fillColour = /business/i.test(label) ? IMPRINT.BFB : /advisor/i.test(label) ? IMPRINT.BFA : /people/i.test(label) ? IMPRINT.BFP : '#5A4F45';
+        Array.prototype.forEach.call(card.querySelectorAll('*'), function (el) {
+          if (getComputedStyle(el).backgroundColor !== 'rgb(238, 238, 238)') return;
+          el.style.setProperty('background-color', '#D8CDB8', 'important');
+          el.style.setProperty('height', '6px', 'important');
+          el.style.setProperty('border-radius', '3px', 'important');
+          Array.prototype.forEach.call(el.querySelectorAll('*'), function (f) {
+            if (getComputedStyle(f).backgroundColor === 'rgba(0, 0, 0, 0)') return;
+            f.style.setProperty('background-color', fillColour, 'important');
+            f.style.setProperty('height', '6px', 'important');
+            f.style.setProperty('border-radius', '3px', 'important');
+          });
+          for (var p = el.parentNode; p && p !== card; p = p.parentNode) {
+            if (getComputedStyle(p).backgroundColor === 'rgb(244, 239, 230)') {
+              p.style.setProperty('background-color', 'transparent', 'important');
+              p.style.setProperty('box-shadow', 'none', 'important');
+            }
+          }
+        });
+      });
       var inner = document.querySelector('#bm-footer-landing .ft-inner');
       var ref = document.querySelector('.section .container') || document.querySelector('.container');
       if (!inner || !ref) return;
