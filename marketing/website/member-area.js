@@ -27,6 +27,27 @@
     st.textContent = css;
     document.head.appendChild(st);
   }
+  // Our «Account» and «Logout» links borrow Kajabi's own (hidden) account-menu links, so they always go where
+  // Kajabi's menu goes, whatever the address or method (a plain /logout answers 404 — owner 2026-11-25).
+  function wireMemberLinks(scope) {
+    function kajabi(re) {
+      var all = document.querySelectorAll('a');
+      for (var i = 0; i < all.length; i++) {
+        var a = all[i];
+        if (a.closest('.bm-header, .bm-member-nav, .bm-footer')) continue;
+        if (re.test((a.textContent || '').replace(/\s+/g, ' ').trim())) return a;
+      }
+      return null;
+    }
+    [['Logout', /^log ?out$/i], ['Account', /^(settings|account|my account)$/i]].forEach(function (pair) {
+      var ours = Array.prototype.filter.call(scope.querySelectorAll('a'), function (a) { return a.textContent === pair[0]; })[0];
+      var theirs = kajabi(pair[1]);
+      if (!ours || !theirs) return;
+      ours.setAttribute('href', theirs.getAttribute('href'));
+      ['data-method', 'rel'].forEach(function (k) { if (theirs.hasAttribute(k)) ours.setAttribute(k, theirs.getAttribute(k)); });
+      ours.addEventListener('click', function (e) { e.preventDefault(); theirs.click(); });
+    });
+  }
   var FIELDS =
     'textarea, input[type="text"], input[type="email"], input[type="password"], input[type="search"], select' +
     ' { background: #F4EFE6 !important; border: 1px solid #D8CDB8 !important; color: #1A1714 !important; box-shadow: none !important; }' +
@@ -77,6 +98,7 @@
         nav.className = 'header__block bm-member-nav';
         nav.innerHTML = '<a href="/library">My Learning</a><a href="/settings/account">Account</a><a href="/logout">Logout</a>';
         user.parentNode.insertBefore(nav, user);
+        wireMemberLinks(nav);
       }
       var inner = document.querySelector('#bm-footer-landing .ft-inner');
       var ref = document.querySelector('.section .container') || document.querySelector('.container');
@@ -116,6 +138,7 @@
         '<a href="/library"><img src="' + LOGOS + 'BRAND_Lockup_twotone-' + (course || 'terracotta') + '.svg" alt="Bitcoin-Minded"></a>' +
         '<nav><a href="/library">My Learning</a><a href="/settings/account">Account</a><a href="/logout">Logout</a></nav></div>';
       document.body.insertBefore(h, document.body.firstChild);
+      wireMemberLinks(h);
     }
     if (!document.querySelector('.bm-footer')) {
       var ft = document.createElement('div');
