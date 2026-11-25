@@ -1,0 +1,49 @@
+/* ============================================================
+   BITCOIN-MINDED — member area (Kajabi course pages + library)
+   Loaded by one <link> in each course's Settings → Custom Code,
+   together with member-area.js. Course colour comes from
+   --bm-imprint, set by member-area.js from data-course.
+   ============================================================ */
+.panel, .pop__body { background: #EBE3D4 !important; }
+.panel:has(.mark-as-complete) { background: #F4EFE6 !important; border: 1px solid #D8CDB8 !important; }
+.progress__bar { background: #D8CDB8 !important; }
+.progress__fill, .coming-up__progress-bar { background: var(--bm-imprint, #8C6A2F) !important; }
+.announce, .comments, .search-result { border-top-color: #D8CDB8 !important; }
+.breadcrumbs__crumb a, .breadcrumbs__crumb--devider { color: #5A4F45 !important; }
+.header--light a:hover, .footer--light a:hover, .pop--light a:hover, .pop__body--light a:hover { color: #B85C2A !important; }
+.header--dark a:hover, .footer--dark a:hover, .pop--dark a:hover, .pop__body--dark a:hover { color: #D8CDB8 !important; }
+.alert-success, .alert-info, .alert-warning, .alert-danger { color: #F4EFE6 !important; }
+.audiojs, .player, .playlist__title, .player__playlist::-webkit-scrollbar-track { background: #1A1714 !important; }
+.audio__playlist { border-color: #1A1714 !important; }
+.audiojs .progress, .track--active, .track__more { background: #5A4F45 !important; }
+.player--simple { background: transparent !important; }
+.player .player__nav { background: #F4EFE6 !important; }
+.header .user__dropdown { background: #F4EFE6 !important; }
+.smart-next { background: #EBE3D4 !important; }
+.btn--solid, .coming-up .btn--skip { color: #F4EFE6 !important; }
+.btn.btn--solid.btn--solid { background: #1A1714 !important; border-color: #1A1714 !important; }
+.btn.btn--solid.btn--solid, .btn.btn--solid.btn--solid * { color: #F4EFE6 !important; }
+.btn.btn--solid.btn--solid:hover { background: #5A4F45 !important; border-color: #5A4F45 !important; }
+.btn.btn--outline.btn--outline { background: transparent !important; border-color: #1A1714 !important; }
+.btn.btn--outline.btn--outline, .btn.btn--outline.btn--outline * { color: #1A1714 !important; }
+.btn.btn--outline.btn--outline:hover { background: #1A1714 !important; }
+.btn.btn--outline.btn--outline:hover, .btn.btn--outline.btn--outline:hover * { color: #F4EFE6 !important; }
+a.bm-btn:hover { background: #5A4F45 !important; }
+.header { display: none !important; }
+.bm-header { background: #F4EFE6; border-bottom: 1px solid #D8CDB8; padding: 22px 0; }
+.bm-header__inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.bm-header img { height: 24px; display: block; max-width: 60vw; }
+.bm-header nav { display: flex; gap: 24px; }
+.bm-header nav a { color: #1A1714 !important; text-decoration: none !important; font-size: 15px; }
+.bm-header nav a:hover { color: #B85C2A !important; text-decoration: underline !important; text-underline-offset: 3px; }
+.footer, .footer-wrap { display: none !important; }
+.bm-footer { background: #F4EFE6; border-top: 1px solid #D8CDB8; padding: 48px 0; margin-top: 48px; }
+.bm-footer__inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.bm-footer img { height: 22px; display: block; }
+.bm-footer__right { display: flex; align-items: center; flex-wrap: wrap; font-size: 13px; color: #5A4F45; }
+.bm-footer__right a { color: #5A4F45 !important; text-decoration: none !important; font-size: 13px; }
+.bm-footer__right a:hover { color: #1A1714 !important; }
+.bm-footer__sep { margin: 0 10px; color: #BFB39A; }
+.bm-footer__pipe { margin: 0 18px; color: #BFB39A; }
+.comments textarea, .comments input[type="text"] { background: #F4EFE6 !important; border: 1px solid #D8CDB8 !important; color: #1A1714 !important; }
+.comments textarea:focus, .comments input[type="text"]:focus { border-color: #5A4F45 !important; outline: none !important; }
