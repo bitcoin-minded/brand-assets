@@ -59,7 +59,14 @@
     document.querySelectorAll('#bm-footer-landing .ft-lockup img, #bm-footer-company .ft-lockup img').forEach(function (img) {
       img.src = LOGOS + 'BRAND_Lockup_primary.svg';
     });
+    // Phones show «© 2026» only, so it fits on the line with Privacy · Terms · Contact (owner 2026-11-26).
+    document.querySelectorAll('#bm-footer-landing .ft-right > span:last-child, #bm-footer-company .ft-right > span:last-child').forEach(function (sp) {
+      if (sp.querySelector('.bm-legal-name')) return;
+      sp.innerHTML = sp.innerHTML.replace(/\s*(Bitcoin-Minded Intl\.?)/, '<span class="bm-legal-name"> $1</span>');
+    });
   });
+  addStyle('@media (max-width: 767px) { .bm-legal-name { display: none !important; }' +
+    ' #bm-footer-landing .ft-right, #bm-footer-company .ft-right { flex-wrap: nowrap !important; white-space: nowrap; } }');
 
   // ---------- Log-in ----------
   if (/^\/login(\/|$)/.test(path)) {
@@ -95,7 +102,12 @@
       '@media (max-width: 767px) {' +
       ' .bm-member-nav { flex-direction: column !important; align-items: stretch !important; gap: 0 !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }' +
       ' .bm-member-nav a { display: block !important; font-size: 16px !important; padding: 16px 20px !important; border-top: 1px solid #D8CDB8 !important; color: #1A1714 !important; text-decoration: none !important; text-align: left !important; }' +
-      ' .bm-member-nav a:last-child { border-bottom: 1px solid #D8CDB8 !important; }' +
+      // Phones: no «Resume» block (a giant lesson card with a doubled title; the course page's Resume Course
+      // button is one tap further), a slimmer course card, and the footer stacked on the left edge.
+      ' .bm-resume { display: none !important; }' +
+      ' .bm-product-card { padding: 20px !important; }' +
+      ' #bm-footer-landing .ft-inner { padding: 24px 0 !important; max-width: none !important; }' +
+
       '}' +
       // Progress track in Rule, like the course page (Kajabi draws it in a generic grey).
       '.progress__bar, [class*="progress__bar"] { background: #D8CDB8 !important; }' +
@@ -110,6 +122,13 @@
         user.parentNode.insertBefore(nav, user);
         wireMemberLinks(nav);
       }
+      // The «Resume Course» block (last lesson watched): marked so phones can hide it.
+      Array.prototype.forEach.call(document.querySelectorAll('a, h1, h2, h3, h4, p, span, div'), function (el) {
+        if (el.children.length || !/^\s*resume course\s*$/i.test(el.textContent)) return;
+        var box = el.parentNode;
+        while (box && box !== document.body && !box.querySelector('img')) box = box.parentNode;
+        if (box && box !== document.body && !box.querySelector('.bm-product-card') && !box.closest('.bm-product-card')) box.classList.add('bm-resume');
+      });
       // Course rows: the smallest block that holds both the course image and its «Enter» button.
       Array.prototype.forEach.call(document.querySelectorAll('a, button'), function (b) {
         if (!/^\s*enter\s*$/i.test(b.textContent)) return;
@@ -206,7 +225,7 @@
       ft.innerHTML = '<div class="bm-footer__inner">' +
         '<a href="/library"><img src="' + LOGOS + 'BRAND_Lockup_primary.svg" alt="Bitcoin-Minded"></a>' +
         '<div class="bm-footer__right"><a href="/privacy">Privacy</a><span class="bm-footer__sep">·</span><a href="/terms">Terms</a><span class="bm-footer__sep">·</span><a href="/contact">Contact</a>' +
-        '<span class="bm-footer__pipe">|</span><span>© ' + new Date().getFullYear() + ' Bitcoin-Minded Intl.</span></div></div>';
+        '<span class="bm-footer__pipe">|</span><span>© ' + new Date().getFullYear() + '<span class="bm-legal-name"> Bitcoin-Minded Intl.</span></span></div></div>';
       document.body.appendChild(ft);
     }
 
