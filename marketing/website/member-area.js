@@ -107,7 +107,7 @@
       ' .bm-resume { display: none !important; }' +
       // Measured against the course page card (owner's shots 07:50): Kajabi adds ~12 px of its own inside the card,
       // and the card sits ~7 px further in than the course page's. So: 8 px sides (+12 = 20), card pulled out 7 px.
-      ' .bm-product-card { padding: 32px 8px 8px !important; margin-left: -7px !important; margin-right: -7px !important; width: auto !important; }' +
+      ' .bm-product-card { padding: 32px 20px 20px !important; margin-left: -7px !important; margin-right: -7px !important; width: auto !important; }' +
       // …and inside the card everything runs edge to edge on the same margin, like the course page's card:
       // no column gutters, the image full width, the Enter button full width.
       ' .bm-product-card .row, .bm-product-card div { margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }' +
@@ -168,6 +168,23 @@
           }
         });
       });
+      // Phones: whatever inside the card still carries side padding or margin (Kajabi's own wrappers, not only divs)
+      // is zeroed, so the card's 20 px is the only inset, as on the course page. Buttons keep their own padding.
+      function bmFlattenCards() {
+        if (window.innerWidth >= 768) return;
+        Array.prototype.forEach.call(document.querySelectorAll('.bm-product-card'), function (card) {
+          Array.prototype.forEach.call(card.querySelectorAll('*'), function (el) {
+            if (el.closest('.btn, button')) return;
+            var cs = getComputedStyle(el);
+            if (cs.display === 'inline') return;
+            ['padding-left', 'padding-right', 'margin-left', 'margin-right'].forEach(function (k) {
+              if (parseFloat(cs.getPropertyValue(k)) !== 0) el.style.setProperty(k, '0', 'important');
+            });
+          });
+        });
+      }
+      bmFlattenCards();
+      window.addEventListener('resize', bmFlattenCards);
       var inner = document.querySelector('#bm-footer-landing .ft-inner');
       var ref = document.querySelector('.section .container') || document.querySelector('.container');
       if (!inner || !ref) return;
