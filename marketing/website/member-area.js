@@ -180,6 +180,18 @@
             ['padding-left', 'padding-right', 'margin-left', 'margin-right'].forEach(function (k) {
               if (parseFloat(cs.getPropertyValue(k)) !== 0) el.style.setProperty(k, '0', 'important');
             });
+            // The real culprit (v1.75 measurements): Kajabi gives the card's columns a fixed share of the width and
+            // centres them, so image and text keep a 12 pt gap on both sides. Every block inside takes the full width.
+            var bar = !(el.textContent || '').trim() && cs.backgroundColor !== 'rgba(0, 0, 0, 0)' && !el.querySelector('img');
+            if (cs.display !== 'inline' && el.tagName !== 'IMG' && !bar && !/progress/i.test(el.className || '')) {
+              el.style.setProperty('max-width', 'none', 'important');
+              el.style.setProperty('width', '100%', 'important');
+              el.style.setProperty('flex', '1 1 100%', 'important');
+            }
+            if (el.tagName === 'IMG') {
+              el.style.setProperty('width', '100%', 'important');
+              el.style.setProperty('max-width', '100%', 'important');
+            }
           });
         });
       }
