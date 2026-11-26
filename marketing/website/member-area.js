@@ -105,7 +105,9 @@
       // Phones: no «Resume» block (a giant lesson card with a doubled title; the course page's Resume Course
       // button is one tap further), a slimmer course card, and the footer stacked on the left edge.
       ' .bm-resume { display: none !important; }' +
-      ' .bm-product-card { padding: 20px !important; }' +
+      // Measured against the course page card (owner's shots 07:50): Kajabi adds ~12 px of its own inside the card,
+      // and the card sits ~7 px further in than the course page's. So: 8 px sides (+12 = 20), card pulled out 7 px.
+      ' .bm-product-card { padding: 32px 8px 8px !important; margin-left: -7px !important; margin-right: -7px !important; width: auto !important; }' +
       // …and inside the card everything runs edge to edge on the same margin, like the course page's card:
       // no column gutters, the image full width, the Enter button full width.
       ' .bm-product-card .row, .bm-product-card div { margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }' +
