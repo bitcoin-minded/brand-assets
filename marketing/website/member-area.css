@@ -49,3 +49,25 @@ a.bm-btn:hover { background: #5A4F45 !important; }
 /* Every text field in the member area (comment box, log-in, search): Paper with a Rule border, never pure white */
 textarea, input[type="text"], input[type="email"], input[type="password"], input[type="search"], select { background: #F4EFE6 !important; border: 1px solid #D8CDB8 !important; color: #1A1714 !important; box-shadow: none !important; }
 textarea:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="search"]:focus, select:focus { border-color: #5A4F45 !important; outline: none !important; }
+
+/* ---------- Phones (owner's mobile review 2026-11-26) ---------- */
+@media (max-width: 767px) {
+  /* Header: logo and the three links on one calm row, nothing cut by the bottom line */
+  .bm-header { padding: 14px 0 !important; }
+  .bm-header__inner { height: auto !important; min-height: 56px; flex-wrap: nowrap !important; padding-left: 20px !important; padding-right: 20px !important; }
+  .bm-header img { height: 18px !important; max-width: 46vw !important; }
+  .bm-header nav { gap: 16px !important; flex-shrink: 0; }
+  .bm-header nav a { font-size: 14px !important; }
+  /* Footer: links on one line, © on its own line below, no dangling separator */
+  .bm-footer { padding: 32px 0 !important; margin-top: 32px !important; }
+  .bm-footer__inner { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; padding-left: 20px !important; padding-right: 20px !important; }
+  .bm-footer__right { flex-direction: row; }
+  .bm-footer__pipe { flex-basis: 100%; height: 0; overflow: hidden; margin: 0 !important; }
+  .bm-footer__right > span:last-child { margin-top: 10px; }
+}
+/* Touch screens keep a tapped button in its hover colour; keep buttons in their resting colours there */
+@media (hover: none) {
+  .btn.btn--solid.btn--solid:hover { background: #1A1714 !important; border-color: #1A1714 !important; }
+  .btn.btn--outline.btn--outline:hover { background: transparent !important; }
+  .btn.btn--outline.btn--outline:hover, .btn.btn--outline.btn--outline:hover * { color: #1A1714 !important; }
+}
