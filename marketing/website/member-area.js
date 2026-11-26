@@ -105,15 +105,17 @@
       // Phones: no «Resume» block (a giant lesson card with a doubled title; the course page's Resume Course
       // button is one tap further), a slimmer course card, and the footer stacked on the left edge.
       ' .bm-resume { display: none !important; }' +
-      // Measured against the course page card (owner's shots 07:50): Kajabi adds ~12 px of its own inside the card,
-      // and the card sits ~7 px further in than the course page's. So: 8 px sides (+12 = 20), card pulled out 7 px.
-      ' .bm-product-card { padding: 32px 20px 20px !important; margin-left: -7px !important; margin-right: -7px !important; width: auto !important; }' +
-      // …and inside the card everything runs edge to edge on the same margin, like the course page's card:
-      // no column gutters, the image full width, the Enter button full width.
-      ' .bm-product-card .row, .bm-product-card div { margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }' +
-      ' .bm-product-card [class*="col"] { width: 100% !important; max-width: 100% !important; flex: 0 0 100% !important; }' +
-      ' .bm-product-card img { width: 100% !important; max-width: 100% !important; height: auto !important; }' +
-      ' .bm-product-card a.btn, .bm-product-card .btn { display: block !important; width: 100% !important; box-sizing: border-box; text-align: center; }' +
+      // Course cards, exact Kajabi structure (owner's page source 2026-11-26): .products .container adds 12 px,
+      // .product__content adds 30 px padding, .product--12 puts image and content side by side (max 380 px image).
+      // On phones: one column, image full width, one 20 px inset for everything — the course page's card.
+      ' .products .product, .products .product.bm-product-card { flex-direction: column !important; padding: 20px !important; margin-left: -7px !important; margin-right: -7px !important; width: auto !important; }' +
+      ' .products .product > a { display: block !important; width: 100% !important; }' +
+      ' .products .product__image { max-width: none !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }' +
+      ' .products .product__image img { display: block !important; width: 100% !important; max-width: none !important; height: auto !important; margin: 0 !important; }' +
+      ' .products .product__content { flex-direction: column !important; padding: 20px 0 0 !important; margin: 0 !important; }' +
+      ' .products .product__info { padding: 0 !important; margin: 0 !important; width: 100% !important; }' +
+      ' .products .product__button { margin: 16px 0 0 !important; padding: 0 !important; width: 100% !important; }' +
+      ' .products .product__button .btn { display: block !important; width: 100% !important; box-sizing: border-box; text-align: center; }' +
       ' #bm-footer-landing .ft-inner { padding: 24px 0 !important; max-width: none !important; }' +
 
       '}' +
@@ -168,35 +170,6 @@
           }
         });
       });
-      // Phones: whatever inside the card still carries side padding or margin (Kajabi's own wrappers, not only divs)
-      // is zeroed, so the card's 20 px is the only inset, as on the course page. Buttons keep their own padding.
-      function bmFlattenCards() {
-        if (window.innerWidth >= 768) return;
-        Array.prototype.forEach.call(document.querySelectorAll('.bm-product-card'), function (card) {
-          Array.prototype.forEach.call(card.querySelectorAll('*'), function (el) {
-            if (el.closest('.btn, button')) return;
-            var cs = getComputedStyle(el);
-            if (cs.display === 'inline') return;
-            ['padding-left', 'padding-right', 'margin-left', 'margin-right'].forEach(function (k) {
-              if (parseFloat(cs.getPropertyValue(k)) !== 0) el.style.setProperty(k, '0', 'important');
-            });
-            // The real culprit (v1.75 measurements): Kajabi gives the card's columns a fixed share of the width and
-            // centres them, so image and text keep a 12 pt gap on both sides. Every block inside takes the full width.
-            var bar = !(el.textContent || '').trim() && cs.backgroundColor !== 'rgba(0, 0, 0, 0)' && !el.querySelector('img');
-            if (cs.display !== 'inline' && el.tagName !== 'IMG' && !bar && !/progress/i.test(el.className || '')) {
-              el.style.setProperty('max-width', 'none', 'important');
-              el.style.setProperty('width', '100%', 'important');
-              el.style.setProperty('flex', '1 1 100%', 'important');
-            }
-            if (el.tagName === 'IMG') {
-              el.style.setProperty('width', '100%', 'important');
-              el.style.setProperty('max-width', '100%', 'important');
-            }
-          });
-        });
-      }
-      bmFlattenCards();
-      window.addEventListener('resize', bmFlattenCards);
       var inner = document.querySelector('#bm-footer-landing .ft-inner');
       var ref = document.querySelector('.section .container') || document.querySelector('.container');
       if (!inner || !ref) return;
