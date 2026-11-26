@@ -203,6 +203,17 @@
     bmAlign();
     window.addEventListener('resize', bmAlign);
 
+    // Lesson page: the lesson title stands on its own — space and a Rule hairline before the lesson text
+    // (owner 2026-11-26: title and first subhead sat too close).
+    var done = document.querySelector('.mark-as-complete');
+    var lessonPanel = done && done.closest('.panel');
+    var lessonTitle = lessonPanel && lessonPanel.querySelector('h1, h2');
+    if (lessonTitle) {
+      lessonTitle.style.setProperty('margin-bottom', '28px', 'important');
+      lessonTitle.style.setProperty('padding-bottom', '24px', 'important');
+      lessonTitle.style.setProperty('border-bottom', '1px solid #D8CDB8', 'important');
+    }
+
     // Syllabus previews start with the body's first subhead («What You Will Learn …»): strip it there.
     var LEAD = /^\s*What You Will Learn\s+/;
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
