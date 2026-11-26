@@ -91,6 +91,12 @@
       'header.header--static .header__block--cta,' +
       'header.header--static .header__block--user { display: none !important; }' +
       '.bm-member-nav { display: flex !important; align-items: center; gap: 32px; }' +
+      // Phones: Kajabi folds its header into its own menu; there our three links stack like the course-page menu.
+      '@media (max-width: 767px) {' +
+      ' .bm-member-nav { flex-direction: column !important; align-items: stretch !important; gap: 0 !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }' +
+      ' .bm-member-nav a { display: block !important; font-size: 16px !important; padding: 16px 20px !important; border-top: 1px solid #D8CDB8 !important; color: #1A1714 !important; text-decoration: none !important; text-align: left !important; }' +
+      ' .bm-member-nav a:last-child { border-bottom: 1px solid #D8CDB8 !important; }' +
+      '}' +
       // Progress track in Rule, like the course page (Kajabi draws it in a generic grey).
       '.progress__bar, [class*="progress__bar"] { background: #D8CDB8 !important; }' +
       // Each course row sits on a Paper-warm card, as on the course page, so the thumbnail's Paper band reads.
