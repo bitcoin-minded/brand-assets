@@ -195,40 +195,51 @@
   link.href = BASE + 'member-area.css';
   document.head.appendChild(link);
 
-  ready(function () {
-    // Which course: from the page title / breadcrumb (course names never change, ids might).
-    var label = document.title + ' ' + ((document.querySelector('.breadcrumbs') || {}).textContent || '');
-    var course = /business/i.test(label) ? 'BFB' : /advisor/i.test(label) ? 'BFA' : /people/i.test(label) ? 'BFP' : '';
-    if (IMPRINT[course]) document.documentElement.style.setProperty('--bm-imprint', IMPRINT[course]);
+  // Which course: from the address and the title (course names never change, ids might).
+  var label = path + ' ' + document.title;
+  var course = /business/i.test(label) ? 'BFB' : /advisor/i.test(label) ? 'BFA' : /people/i.test(label) ? 'BFP' : '';
+  if (IMPRINT[course]) document.documentElement.style.setProperty('--bm-imprint', IMPRINT[course]);
 
-    if (!document.querySelector('.bm-header')) {
-      var h = document.createElement('div');
-      h.className = 'bm-header';
-      h.innerHTML = '<div class="bm-header__inner">' +
-        '<a href="/library"><img src="' + LOGOS + 'BRAND_Lockup_twotone-' + (course || 'terracotta') + '.svg" alt="Bitcoin-Minded"></a>' +
-        '<nav><a href="/library">My Learning</a><a href="/settings/account">Account</a><a href="/logout">Logout</a></nav></div>';
-      document.body.insertBefore(h, document.body.firstChild);
-      wireMemberLinks(h);
-      // Phones: the three links live behind a menu button (shown by member-area.css below 768 px).
-      var burger = document.createElement('button');
-      burger.type = 'button';
-      burger.className = 'bm-burger';
-      burger.setAttribute('aria-label', 'Menu');
-      burger.setAttribute('aria-expanded', 'false');
-      burger.innerHTML = '<span></span>';
-      h.firstChild.appendChild(burger);
-      burger.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var open = h.classList.toggle('is-open');
-        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      });
-      document.addEventListener('click', function (e) {
-        if (!h.contains(e.target) && h.classList.contains('is-open')) {
-          h.classList.remove('is-open');
-          burger.setAttribute('aria-expanded', 'false');
-        }
-      });
-    }
+  // The member header goes in the moment <body> exists, not after the whole page has loaded, so it never
+  // «arrives late» above content that is already showing (owner 2026-11-26).
+  var h = null;
+  function bmBuildHeader() {
+    if (h || !document.body) return;
+    h = document.createElement('div');
+    h.className = 'bm-header';
+    h.innerHTML = '<div class="bm-header__inner">' +
+      '<a href="/library"><img src="' + LOGOS + 'BRAND_Lockup_twotone-' + (course || 'terracotta') + '.svg" alt="Bitcoin-Minded"></a>' +
+      '<nav><a href="/library">My Learning</a><a href="/settings/account">Account</a><a href="/logout">Logout</a></nav></div>';
+    document.body.insertBefore(h, document.body.firstChild);
+    // Phones: the three links live behind a menu button (shown by member-area.css below 768 px).
+    var burger = document.createElement('button');
+    burger.type = 'button';
+    burger.className = 'bm-burger';
+    burger.setAttribute('aria-label', 'Menu');
+    burger.setAttribute('aria-expanded', 'false');
+    burger.innerHTML = '<span></span>';
+    h.firstChild.appendChild(burger);
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = h.classList.toggle('is-open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function (e) {
+      if (!h.contains(e.target) && h.classList.contains('is-open')) {
+        h.classList.remove('is-open');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+  if (document.body) bmBuildHeader();
+  else {
+    var bodyWatch = new MutationObserver(function () { if (document.body) { bodyWatch.disconnect(); bmBuildHeader(); } });
+    bodyWatch.observe(document.documentElement, { childList: true });
+  }
+
+  ready(function () {
+    bmBuildHeader();
+    wireMemberLinks(h);   // Kajabi's own account links exist only once the page is parsed
     if (!document.querySelector('.bm-footer')) {
       var ft = document.createElement('div');
       ft.className = 'bm-footer';
@@ -343,10 +354,19 @@
       if (!panel) return;
       // Everything between the card edge and the image loses its top spacing; the card's own top padding then equals
       // its side padding. (v1.78 used a negative margin, which collapsed through the card and pulled it under the header.)
-      for (var el = img.parentNode; el && el !== panel; el = el.parentNode) {
-        el.style.setProperty('margin-top', '0', 'important');
-        el.style.setProperty('padding-top', '0', 'important');
+      // v1.79 found nothing to remove around the image, so the 24 pt sits in an empty element ABOVE it
+      // (an unused slot of Kajabi's card). Empty elements before the image are hidden; spacing around it is zeroed.
+      for (var el = img; el && el !== panel; el = el.parentNode) {
+        if (el !== img) {
+          el.style.setProperty('margin-top', '0', 'important');
+          el.style.setProperty('padding-top', '0', 'important');
+        }
+        for (var sib = el.previousElementSibling; sib; sib = sib.previousElementSibling) {
+          if (/^(SCRIPT|STYLE|LINK|META)$/.test(sib.tagName)) continue;
+          if (!(sib.textContent || '').trim() && !sib.querySelector('img, video, iframe, svg')) sib.style.setProperty('display', 'none', 'important');
+        }
       }
+      img.style.setProperty('margin-top', '0', 'important');
       var side = img.getBoundingClientRect().left - panel.getBoundingClientRect().left;
       panel.style.setProperty('padding-top', Math.max(side, 1) + 'px', 'important');
     }
