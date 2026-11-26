@@ -214,6 +214,51 @@
       lessonTitle.style.setProperty('border-bottom', '1px solid #D8CDB8', 'important');
     }
 
+    // «Download Video» = one click (owner 2026-11-26). Kajabi's button opens the MP4 (a signed S3 link that
+    // allows cross-origin reads) in a new tab; here the file is fetched and saved under the lesson's title, with
+    // progress on the button. Phones and any failure fall back to Kajabi's own behaviour (open the video).
+    var mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    Array.prototype.forEach.call(document.querySelectorAll('a'), function (a) {
+      var href = a.getAttribute('href') || '';
+      if (!/\.mp4(\?|$)/i.test(href) || !/download/i.test(a.textContent)) return;
+      if (mobile || !window.fetch || !window.ReadableStream || !window.URL || !URL.createObjectURL) return;
+      var label = a.textContent;
+      var busy = false;
+      a.removeAttribute('target');
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (busy) return;
+        busy = true;
+        var name = ((lessonTitle && lessonTitle.textContent) || document.title || 'Lesson').replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, ' ').trim() + '.mp4';
+        a.textContent = 'Preparing download…';
+        fetch(href).then(function (r) {
+          if (!r.ok || !r.body) throw new Error('http ' + r.status);
+          var total = +r.headers.get('Content-Length') || 0, got = 0, chunks = [];
+          var reader = r.body.getReader();
+          function pump() {
+            return reader.read().then(function (res) {
+              if (res.done) return new Blob(chunks, { type: 'video/mp4' });
+              chunks.push(res.value);
+              got += res.value.length;
+              if (total) a.textContent = 'Downloading… ' + Math.floor(got * 100 / total) + '%';
+              return pump();
+            });
+          }
+          return pump();
+        }).then(function (blob) {
+          var url = URL.createObjectURL(blob);
+          var tmp = document.createElement('a');
+          tmp.href = url; tmp.download = name; tmp.style.display = 'none';
+          document.body.appendChild(tmp); tmp.click(); tmp.remove();
+          setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+          a.textContent = label; busy = false;
+        }).catch(function () {
+          a.textContent = label; busy = false;
+          window.open(href, '_blank', 'noopener');
+        });
+      });
+    });
+
     // Syllabus previews start with the body's first subhead («What You Will Learn …»): strip it there.
     var LEAD = /^\s*What You Will Learn\s+/;
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
