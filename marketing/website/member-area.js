@@ -341,17 +341,14 @@
       var img = Array.prototype.filter.call(document.querySelectorAll('.panel img'), function (i) { return /COURSE-THUMB/i.test(i.src); })[0];
       var panel = img && img.closest('.panel');
       if (!panel) return;
-      var p = panel.getBoundingClientRect(), r = img.getBoundingClientRect();
-      var side = r.left - p.left, extra = (r.top - p.top) - side;
-      if (extra <= 1) return;
-      var pt = parseFloat(getComputedStyle(panel).paddingTop) || 0;
-      var cut = Math.min(pt, extra);
-      panel.style.setProperty('padding-top', (pt - cut) + 'px', 'important');
-      if (extra - cut > 1) {
-        var top = img; while (top.parentNode && top.parentNode !== panel) top = top.parentNode;
-        var mt = parseFloat(getComputedStyle(top).marginTop) || 0;
-        top.style.setProperty('margin-top', (mt - (extra - cut)) + 'px', 'important');
+      // Everything between the card edge and the image loses its top spacing; the card's own top padding then equals
+      // its side padding. (v1.78 used a negative margin, which collapsed through the card and pulled it under the header.)
+      for (var el = img.parentNode; el && el !== panel; el = el.parentNode) {
+        el.style.setProperty('margin-top', '0', 'important');
+        el.style.setProperty('padding-top', '0', 'important');
       }
+      var side = img.getBoundingClientRect().left - panel.getBoundingClientRect().left;
+      panel.style.setProperty('padding-top', Math.max(side, 1) + 'px', 'important');
     }
     bmEvenCourseCardTop();
     window.addEventListener('load', bmEvenCourseCardTop);
