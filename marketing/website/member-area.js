@@ -334,6 +334,28 @@
       if (last && isDivider(last)) last.remove();
     });
 
+    // Phones: the course card's top gap (image to card edge) equals its side gap, as on My Learning (owner 2026-11-26:
+    // measured 44 pt top vs 20 pt sides). Measured live, so it holds whatever Kajabi's wrappers are called.
+    function bmEvenCourseCardTop() {
+      if (window.innerWidth >= 768) return;
+      var img = Array.prototype.filter.call(document.querySelectorAll('.panel img'), function (i) { return /COURSE-THUMB/i.test(i.src); })[0];
+      var panel = img && img.closest('.panel');
+      if (!panel) return;
+      var p = panel.getBoundingClientRect(), r = img.getBoundingClientRect();
+      var side = r.left - p.left, extra = (r.top - p.top) - side;
+      if (extra <= 1) return;
+      var pt = parseFloat(getComputedStyle(panel).paddingTop) || 0;
+      var cut = Math.min(pt, extra);
+      panel.style.setProperty('padding-top', (pt - cut) + 'px', 'important');
+      if (extra - cut > 1) {
+        var top = img; while (top.parentNode && top.parentNode !== panel) top = top.parentNode;
+        var mt = parseFloat(getComputedStyle(top).marginTop) || 0;
+        top.style.setProperty('margin-top', (mt - (extra - cut)) + 'px', 'important');
+      }
+    }
+    bmEvenCourseCardTop();
+    window.addEventListener('load', bmEvenCourseCardTop);
+
     // Syllabus previews start with the body's first subhead («What You Will Learn …»): strip it there.
     var LEAD = /^\s*What You Will Learn\s+/;
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
