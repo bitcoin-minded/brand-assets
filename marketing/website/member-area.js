@@ -106,6 +106,12 @@
       // button is one tap further), a slimmer course card, and the footer stacked on the left edge.
       ' .bm-resume { display: none !important; }' +
       ' .bm-product-card { padding: 20px !important; }' +
+      // …and inside the card everything runs edge to edge on the same margin, like the course page's card:
+      // no column gutters, the image full width, the Enter button full width.
+      ' .bm-product-card .row, .bm-product-card div { margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }' +
+      ' .bm-product-card [class*="col"] { width: 100% !important; max-width: 100% !important; flex: 0 0 100% !important; }' +
+      ' .bm-product-card img { width: 100% !important; max-width: 100% !important; height: auto !important; }' +
+      ' .bm-product-card a.btn, .bm-product-card .btn { display: block !important; width: 100% !important; box-sizing: border-box; text-align: center; }' +
       ' #bm-footer-landing .ft-inner { padding: 24px 0 !important; max-width: none !important; }' +
 
       '}' +
