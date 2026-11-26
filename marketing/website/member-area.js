@@ -174,6 +174,25 @@
         '<nav><a href="/library">My Learning</a><a href="/settings/account">Account</a><a href="/logout">Logout</a></nav></div>';
       document.body.insertBefore(h, document.body.firstChild);
       wireMemberLinks(h);
+      // Phones: the three links live behind a menu button (shown by member-area.css below 768 px).
+      var burger = document.createElement('button');
+      burger.type = 'button';
+      burger.className = 'bm-burger';
+      burger.setAttribute('aria-label', 'Menu');
+      burger.setAttribute('aria-expanded', 'false');
+      burger.innerHTML = '<span></span>';
+      h.firstChild.appendChild(burger);
+      burger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = h.classList.toggle('is-open');
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', function (e) {
+        if (!h.contains(e.target) && h.classList.contains('is-open')) {
+          h.classList.remove('is-open');
+          burger.setAttribute('aria-expanded', 'false');
+        }
+      });
     }
     if (!document.querySelector('.bm-footer')) {
       var ft = document.createElement('div');
