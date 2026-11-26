@@ -303,6 +303,27 @@
       });
     });
 
+    // Breadcrumbs: a lesson that sits directly in a section (no Part) leaves an empty crumb, so the trail shows
+    // two dividers in a row («Course · · Section»). Drop empty crumbs and any doubled, leading or trailing divider.
+    Array.prototype.forEach.call(document.querySelectorAll('.breadcrumbs'), function (wrap) {
+      var first = wrap.querySelector('.breadcrumbs__crumb');
+      var bc = first ? first.parentNode : wrap;
+      function isDivider(el) {
+        return /devider|divider|separator/i.test(el.className || '') || /^[\s·•\/>›|]+$/.test(el.textContent || '');
+      }
+      Array.prototype.slice.call(bc.children).forEach(function (el) {
+        if (!isDivider(el) && !(el.textContent || '').trim() && !el.querySelector('img, svg')) el.remove();
+      });
+      var prevDivider = true;
+      Array.prototype.slice.call(bc.children).forEach(function (el) {
+        var d = isDivider(el);
+        if (d && prevDivider) { el.remove(); return; }
+        prevDivider = d;
+      });
+      var last = bc.lastElementChild;
+      if (last && isDivider(last)) last.remove();
+    });
+
     // Syllabus previews start with the body's first subhead («What You Will Learn …»): strip it there.
     var LEAD = /^\s*What You Will Learn\s+/;
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
