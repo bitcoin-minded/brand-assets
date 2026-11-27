@@ -279,6 +279,34 @@
       lessonTitle.style.setProperty('border-bottom', '1px solid #D8CDB8', 'important');
     }
 
+    // Lesson page: a Rule hairline around the video player, like the lesson text card (owner 2026-11-27: on slide
+    // shots the player had no edge and the slide paper, a shade lighter, bled into the page). Kajabi's player loads
+    // late and its wrapper names are not known here, so: the biggest player element, then up through every parent
+    // of the same size; the outermost one gets the frame (its parent is bigger, so nothing clips it).
+    function bmFramePlayer() {
+      if (!done) return true;
+      var best = null, area = 0;
+      Array.prototype.forEach.call(document.querySelectorAll('iframe, video, mux-player, .wistia_embed, [class*="kjb-video"]'), function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.width * r.height > area && r.width > 200) { best = el; area = r.width * r.height; }
+      });
+      if (!best) return false;
+      var box = best, br = best.getBoundingClientRect();
+      for (var p = box.parentElement; p && p !== document.body; p = p.parentElement) {
+        var pr = p.getBoundingClientRect();
+        if (Math.abs(pr.width - br.width) > 2 || Math.abs(pr.height - br.height) > 2) break;
+        box = p;
+      }
+      box.style.setProperty('outline', '1px solid #D8CDB8', 'important');
+      box.style.setProperty('outline-offset', '0', 'important');
+      return true;
+    }
+    if (done && !bmFramePlayer()) {
+      var bmFrameTries = 0, bmFrameTimer = setInterval(function () {
+        if (bmFramePlayer() || ++bmFrameTries > 40) clearInterval(bmFrameTimer);
+      }, 250);
+    }
+
     // «Download Video» = one click (owner 2026-11-26). Kajabi's button opens the MP4 (a signed S3 link that
     // allows cross-origin reads) in a new tab; here the file is fetched and saved under the lesson's title, with
     // progress on the button. Phones and any failure fall back to Kajabi's own behaviour (open the video).
