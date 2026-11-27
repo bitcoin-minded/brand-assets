@@ -390,6 +390,58 @@
       if (last && isDivider(last)) last.remove();
     });
 
+    // Lesson breadcrumbs: «Section N» in place of the course name (owner 2026-11-27). Kajabi leaves the parent section
+    // out of the trail (its crumb is empty), so the number is looked up once per course and kept for the visit:
+    // the course page lists the sections in order; a lesson in a group is matched through its section's page, which
+    // links to the groups inside it. Until the number is known the course crumb is hidden; on any failure it comes back.
+    var bmLessonPath = location.pathname.match(/^\/products\/([^\/]+)\/categories\/(\d+)\/posts\//);
+    var bmCourseCrumb = bmLessonPath && document.querySelector('.breadcrumbs .breadcrumbs__crumb a[href$="/products/' + bmLessonPath[1] + '"]');
+    if (bmCourseCrumb) {
+      var bmSlug = bmLessonPath[1], bmCat = bmLessonPath[2], bmKey = 'bmSections:' + bmSlug;
+      var bmMap = {};
+      try { bmMap = JSON.parse(sessionStorage.getItem(bmKey) || '{}'); } catch (e) {}
+      var bmShow = function (n) {
+        if (n) bmCourseCrumb.textContent = 'Section ' + n;
+        bmCourseCrumb.style.visibility = '';
+      };
+      if (bmMap[bmCat]) { bmShow(bmMap[bmCat]); }
+      else if (window.fetch && window.DOMParser) {
+        bmCourseCrumb.style.visibility = 'hidden';
+        var bmGet = function (url) {
+          return fetch(url, { credentials: 'same-origin' }).then(function (r) {
+            if (!r.ok) throw new Error('http ' + r.status);
+            return r.text();
+          }).then(function (t) { return new DOMParser().parseFromString(t, 'text/html'); });
+        };
+        var bmIds = function (doc) {
+          var links = doc.querySelectorAll('.syllabus__item a[href*="/categories/"]');
+          if (!links.length) links = doc.querySelectorAll('a[href*="/categories/"]');
+          var ids = [];
+          Array.prototype.forEach.call(links, function (a) {
+            var m = (a.getAttribute('href') || '').match(/\/categories\/(\d+)\/?$/);
+            if (m && ids.indexOf(m[1]) < 0) ids.push(m[1]);
+          });
+          return ids;
+        };
+        bmGet('/products/' + bmSlug).then(function (doc) {
+          var sections = bmIds(doc);
+          if (!sections.length) throw new Error('no sections');
+          sections.forEach(function (id, i) { bmMap[id] = i + 1; });
+          if (bmMap[bmCat]) return;
+          return Promise.all(sections.map(function (id) {
+            return bmGet('/products/' + bmSlug + '/categories/' + id).then(bmIds).catch(function () { return []; });
+          })).then(function (lists) {
+            lists.forEach(function (ids, i) {
+              ids.forEach(function (id) { if (!bmMap[id]) bmMap[id] = i + 1; });
+            });
+          });
+        }).then(function () {
+          try { sessionStorage.setItem(bmKey, JSON.stringify(bmMap)); } catch (e) {}
+          bmShow(bmMap[bmCat]);
+        }).catch(function () { bmShow(0); });
+      }
+    }
+
     // Phones: the course card's top gap (image to card edge) equals its side gap, as on My Learning (owner 2026-11-26:
     // measured 44 pt top vs 20 pt sides). Measured live, so it holds whatever Kajabi's wrappers are called.
     function bmEvenCourseCardTop() {
