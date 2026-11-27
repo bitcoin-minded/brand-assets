@@ -297,8 +297,12 @@
         if (Math.abs(pr.width - br.width) > 2 || Math.abs(pr.height - br.height) > 2) break;
         box = p;
       }
+      // v1.82: the frame is drawn just INSIDE the box, on its own layer, so the bar below the player (Previous /
+      // Next) can no longer paint over the bottom line (owner 2026-11-27: bottom edge missing in v1.81).
+      if (getComputedStyle(box).position === 'static') box.style.setProperty('position', 'relative', 'important');
+      box.style.setProperty('z-index', '1', 'important');
       box.style.setProperty('outline', '1px solid #D8CDB8', 'important');
-      box.style.setProperty('outline-offset', '0', 'important');
+      box.style.setProperty('outline-offset', '-1px', 'important');
       return true;
     }
     if (done && !bmFramePlayer()) {
