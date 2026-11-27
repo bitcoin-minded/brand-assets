@@ -423,13 +423,27 @@
           });
           return ids;
         };
+        // A section's page lists each group as <div class="syllabus__item--sub" id="category-N"> with links to its
+        // lessons (…/categories/N/posts/…), not to the group itself (seen in the owner's S2 page source, 2026-11-27).
+        var bmSubIds = function (doc) {
+          var ids = [];
+          Array.prototype.forEach.call(doc.querySelectorAll('[id^="category-"]'), function (el) {
+            var m = el.id.match(/^category-(\d+)$/);
+            if (m && ids.indexOf(m[1]) < 0) ids.push(m[1]);
+          });
+          Array.prototype.forEach.call(doc.querySelectorAll('a[href*="/posts/"]'), function (a) {
+            var m = (a.getAttribute('href') || '').match(/\/categories\/(\d+)\/posts\//);
+            if (m && ids.indexOf(m[1]) < 0) ids.push(m[1]);
+          });
+          return ids;
+        };
         bmGet('/products/' + bmSlug).then(function (doc) {
           var sections = bmIds(doc);
           if (!sections.length) throw new Error('no sections');
           sections.forEach(function (id, i) { bmMap[id] = i + 1; });
           if (bmMap[bmCat]) return;
           return Promise.all(sections.map(function (id) {
-            return bmGet('/products/' + bmSlug + '/categories/' + id).then(bmIds).catch(function () { return []; });
+            return bmGet('/products/' + bmSlug + '/categories/' + id).then(bmSubIds).catch(function () { return []; });
           })).then(function (lists) {
             lists.forEach(function (ids, i) {
               ids.forEach(function (id) { if (!bmMap[id]) bmMap[id] = i + 1; });
