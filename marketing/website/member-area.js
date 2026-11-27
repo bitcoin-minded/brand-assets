@@ -297,12 +297,25 @@
         if (Math.abs(pr.width - br.width) > 2 || Math.abs(pr.height - br.height) > 2) break;
         box = p;
       }
-      // v1.82: the frame is drawn just INSIDE the box, on its own layer, so the bar below the player (Previous /
-      // Next) can no longer paint over the bottom line (owner 2026-11-27: bottom edge missing in v1.81).
-      if (getComputedStyle(box).position === 'static') box.style.setProperty('position', 'relative', 'important');
-      box.style.setProperty('z-index', '1', 'important');
-      box.style.setProperty('outline', '1px solid #D8CDB8', 'important');
-      box.style.setProperty('outline-offset', '-1px', 'important');
+      // v1.83: the frame is its own thin layer laid ON TOP of the player (pointer-events off, so every click still
+      // reaches the video). v1.81's outline was covered at the bottom by the Previous/Next bar; v1.82's inset outline
+      // was covered by the video itself (owner 2026-11-27). A layer above the video, inside its box, is covered by neither.
+      if (document.getElementById('bm-player-frame')) return true;
+      var host = /^(IFRAME|VIDEO|MUX-PLAYER)$/.test(box.tagName) ? box.parentElement : box;
+      if (getComputedStyle(host).position === 'static') host.style.setProperty('position', 'relative', 'important');
+      var hr = host.getBoundingClientRect(), xr = box.getBoundingClientRect();
+      var frame = document.createElement('div');
+      frame.id = 'bm-player-frame';
+      frame.setAttribute('aria-hidden', 'true');
+      frame.style.cssText = 'position:absolute;pointer-events:none;box-sizing:border-box;border:1px solid #D8CDB8;z-index:2147483647;'
+        + 'left:' + (xr.left - hr.left) + 'px;top:' + (xr.top - hr.top) + 'px;width:' + xr.width + 'px;height:' + xr.height + 'px;';
+      host.appendChild(frame);
+      function bmFrameFit() {
+        var h = host.getBoundingClientRect(), x = box.getBoundingClientRect();
+        frame.style.left = (x.left - h.left) + 'px'; frame.style.top = (x.top - h.top) + 'px';
+        frame.style.width = x.width + 'px'; frame.style.height = x.height + 'px';
+      }
+      window.addEventListener('resize', bmFrameFit);
       return true;
     }
     if (done && !bmFramePlayer()) {
