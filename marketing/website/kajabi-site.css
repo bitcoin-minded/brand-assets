@@ -1817,6 +1817,18 @@ footer.footer,
   background-color: var(--color-ink);
 }
 
+/* Rule hairline on every lesson frame, as on the member-area player (owner 2026-11-28: the Paper title card
+   melted into the Paper page). A layer on top of the poster, so the image cannot cover it; clicks pass through. */
+.lesson-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-rule);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+}
+
 .lesson-frame__poster {
   width: 100%;
   height: 100%;
@@ -3327,6 +3339,21 @@ footer.footer,
   color: var(--color-ink) !important;
   margin: 0 0 var(--space-6) 0;
 }
+/* The lead lesson's length sits beside its title (owner 2026-11-28: the meta row, the «Lesson 01» line and the
+   caption row under the player came out, so the player rises toward the fold). */
+.fp-stage__dur {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--type-body);
+  color: var(--color-ink-mute);
+  white-space: nowrap;
+}
+.fp-hero { padding-top: var(--space-8); }
+.fp-hero__heading { margin-bottom: var(--space-4); }
+.fp-hero__lead { margin-bottom: 0; }
+.fp-stage__title { margin-bottom: var(--space-4); }
+@media (max-width: 1023px) { .fp-hero { padding-top: var(--space-7); } }
+@media (max-width: 767px)  { .fp-hero { padding-top: var(--space-7); } }
 /* Reuses .lesson-frame from kajabi-site.css for the player */
 .fp-stage .lesson-frame { margin-bottom: var(--space-4); }
 .fp-stage__caption {
