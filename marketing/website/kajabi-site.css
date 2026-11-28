@@ -3666,13 +3666,15 @@ footer.footer,
 @media (max-width: 1023px) { .fp-proof { padding: var(--space-8) var(--space-7); } }
 @media (max-width: 767px)  { .fp-proof { padding: var(--space-8) var(--space-5); } }
 
-/* Lessons → quote → Enroll on one left edge, tighter bands (owner 2026-11-28, v1.87): the centred quote looked
-   dropped in, small in a tall band, and the Enroll band was the tallest for the least content. Free Preview only. */
-#fpPreview .fp-unlock { padding-bottom: var(--space-7); }
-#fpPreview .fp-proof { padding-top: var(--space-7); padding-bottom: var(--space-7); }
-#fpPreview .fp-proof__inner { text-align: left; }
-#fpPreview .fp-proof__quote { font-size: var(--type-h2) !important; line-height: 1.25 !important; max-width: 34ch; margin: 0 0 var(--space-4); }
-#fpPreview .closing-cta { padding-top: var(--space-8); padding-bottom: var(--space-8); }
+/* Free Preview close (owner 2026-11-28). v1.87 put the quote on the left edge and cut the bands by a third; the owner
+   found the end anxious. v1.88: the quote is the one centred moment on the page, set large with room around it (a
+   pause before the decision); attribution centred under it; bands back near their first size, Enroll a little
+   tighter than at first. */
+#fpPreview .fp-unlock { padding-bottom: var(--space-8); }
+#fpPreview .fp-proof { padding-top: var(--space-9); padding-bottom: var(--space-9); }
+#fpPreview .fp-proof__inner { text-align: center; }
+#fpPreview .fp-proof__quote { font-size: var(--type-h2) !important; line-height: 1.25 !important; max-width: 30ch; margin: 0 auto var(--space-5); }
+#fpPreview .closing-cta { padding-top: var(--space-9); padding-bottom: var(--space-9); }
 
 /* ---------- Chooser hub (ambiguous entry) ---------- */
 .fp-chooser { display: none; }
